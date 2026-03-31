@@ -1,0 +1,58 @@
+---
+import "../styles/theme.css";
+
+type NavItem = {
+  label: string;
+  href: string;
+};
+
+interface Props {
+  title: string;
+  description: string;
+  brand: string;
+  role: string;
+  navItems: NavItem[];
+}
+
+const { title, description, brand, role, navItems } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="page-shell__noise"></div>
+      <div class="page-shell__scanline"></div>
+
+      <header class="topbar">
+        <a class="brand" href="#top">
+          <span class="brand__name">{brand}</span>
+          <span class="brand__role">{role}</span>
+        </a>
+
+        <nav class="nav" aria-label="Основная навигация">
+          {
+            navItems.map((item) => (
+              <a href={item.href}>{item.label}</a>
+            ))
+          }
+        </nav>
+      </header>
+
+      <main id="top" class="page-content">
+        <slot />
+      </main>
+
+      <footer class="footer">
+        <span>Built with Astro. Static by design.</span>
+        <span>Sepia terminal mood, engineering-first content.</span>
+      </footer>
+    </div>
+  </body>
+</html>

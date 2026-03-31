@@ -1,0 +1,296 @@
+---
+import type { HeroData, ProfileData } from "../data/profile";
+import Telemoji from "./Telemoji.astro";
+
+interface Props {
+  hero: HeroData;
+  name: ProfileData["name"];
+  role: ProfileData["role"];
+}
+
+const { hero, name, role } = Astro.props;
+---
+
+<section class="hero panel">
+  <div class="hero__main">
+    <div class="hero__eyebrow">
+      <span>{hero.eyebrow}</span>
+      <span class="hero__eyebrow-line"></span>
+    </div>
+
+    <div class="hero__title-wrap">
+      <Telemoji asset={hero.emoji} size={80} className="hero__emoji" />
+      <p class="hero__identity">{name}</p>
+      <h1>{hero.title}</h1>
+      <p class="hero__role">{role}</p>
+    </div>
+
+    <p class="hero__summary">{hero.summary}</p>
+    <p class="hero__description">{hero.description}</p>
+
+    <div class="hero__actions">
+      <a class="button button--primary" href={hero.ctaPrimary.href}>
+        {hero.ctaPrimary.label}
+      </a>
+      <a class="button button--secondary" href={hero.ctaSecondary.href}>
+        {hero.ctaSecondary.label}
+      </a>
+    </div>
+
+    <ul class="hero__focus-list">
+      {
+        hero.focus.map((item) => (
+          <li>{item}</li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="hero__side">
+    <div class="hero__cards">
+      {
+        hero.capabilityCards.map((card) => (
+          <article class="hero__card">
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="hero__console">
+      <div class="hero__console-top">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="hero__console-meta">
+        <span>session://tedeshi</span>
+        <span>mode: portfolio</span>
+      </div>
+
+      <pre>
+        <code>{hero.terminalLines.join("\n")}</code>
+      </pre>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    gap: 2rem;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    align-items: start;
+  }
+
+  .hero__main {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .hero__eyebrow-line {
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, var(--color-accent), transparent);
+  }
+
+  .hero__title-wrap {
+    position: relative;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .hero__emoji {
+    position: absolute;
+    right: clamp(0rem, 4vw, 2rem);
+    top: -0.5rem;
+    filter: drop-shadow(0 14px 30px rgba(94, 57, 17, 0.25));
+    animation: drift 7s ease-in-out infinite;
+  }
+
+  .hero__identity,
+  .hero__role {
+    margin: 0;
+    font-family: var(--font-mono);
+  }
+
+  .hero__identity {
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(3.1rem, 7vw, 6rem);
+    line-height: 0.96;
+    text-wrap: balance;
+  }
+
+  .hero__role {
+    color: var(--color-text-soft);
+    font-size: 0.98rem;
+  }
+
+  .hero__summary,
+  .hero__description {
+    max-width: 55rem;
+    margin: 0;
+    font-size: 1.06rem;
+    line-height: 1.8;
+    color: var(--color-text-soft);
+  }
+
+  .hero__summary {
+    color: var(--color-text);
+    font-size: 1.15rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.95rem;
+    margin-top: 0.4rem;
+  }
+
+  .hero__focus-list {
+    display: grid;
+    gap: 0.8rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero__focus-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 3.35rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-panel-soft);
+    color: var(--color-text-soft);
+  }
+
+  .hero__focus-list li::before {
+    content: ">";
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+  }
+
+  .hero__side {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .hero__cards {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero__card {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: linear-gradient(180deg, rgba(247, 236, 214, 0.72), rgba(233, 217, 187, 0.5));
+  }
+
+  .hero__card span {
+    color: var(--color-text-soft);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero__card strong {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .hero__console {
+    overflow: hidden;
+    border: 1px solid rgba(108, 70, 29, 0.24);
+    border-radius: 1.2rem;
+    background:
+      linear-gradient(180deg, rgba(48, 31, 13, 0.98), rgba(32, 21, 10, 0.96));
+    box-shadow: inset 0 1px 0 rgba(255, 243, 220, 0.07);
+  }
+
+  .hero__console-top,
+  .hero__console-meta {
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__console-top {
+    gap: 0.45rem;
+    padding: 1rem 1rem 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .hero__console-top span {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: rgba(255, 214, 155, 0.4);
+  }
+
+  .hero__console-meta {
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    color: rgba(255, 225, 182, 0.72);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    color: rgba(255, 226, 184, 0.92);
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 980px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__emoji {
+      right: 0;
+      top: -1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero__cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

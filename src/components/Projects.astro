@@ -1,0 +1,128 @@
+---
+import type { ProjectCard } from "../data/profile";
+import SectionHeading from "./SectionHeading.astro";
+import Telemoji from "./Telemoji.astro";
+
+interface Props {
+  projects: ProjectCard[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section id="projects" class="section">
+  <SectionHeading
+    eyebrow="cases://selected"
+    title="Кейсы и инженерные паттерны"
+    description="Пока без привязки к конфиденциальным коммерческим данным: здесь собраны паттерны решений и подходы, которые лучше всего отражают мой стиль работы."
+    emoji={projects[0].emoji}
+  />
+
+  <div class="projects-grid">
+    {
+      projects.map((project) => (
+        <article class="panel project-card">
+          <div class="project-card__header">
+            <div>
+              <p class="project-card__role">{project.role}</p>
+              <h3>{project.name}</h3>
+            </div>
+
+            <Telemoji asset={project.emoji} size={56} />
+          </div>
+
+          <p class="project-card__summary">{project.summary}</p>
+
+          <div class="project-card__tags">
+            {
+              project.stack.map((item) => (
+                <span>{item}</span>
+              ))
+            }
+          </div>
+
+          <ul class="project-card__impact">
+            {
+              project.impact.map((item) => (
+                <li>{item}</li>
+              ))
+            }
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .projects-grid {
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .project-card {
+    display: grid;
+    gap: 1rem;
+    padding: 1.45rem;
+  }
+
+  .project-card__header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .project-card__role,
+  .project-card__tags span {
+    margin: 0;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    margin-top: 0.45rem;
+    font-size: 1.4rem;
+  }
+
+  .project-card__summary,
+  .project-card__impact li {
+    color: var(--color-text-soft);
+    line-height: 1.75;
+  }
+
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .project-card__tags span {
+    padding: 0.45rem 0.7rem;
+    border: 1px solid rgba(108, 70, 29, 0.24);
+    border-radius: 999px;
+    background: rgba(245, 233, 208, 0.55);
+  }
+
+  .project-card__impact {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding-left: 1rem;
+  }
+
+  @media (max-width: 1080px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

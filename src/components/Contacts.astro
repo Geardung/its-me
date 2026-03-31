@@ -1,0 +1,111 @@
+---
+import type { ContactLink } from "../data/profile";
+import SectionHeading from "./SectionHeading.astro";
+import Telemoji from "./Telemoji.astro";
+
+interface Props {
+  contacts: ContactLink[];
+}
+
+const { contacts } = Astro.props;
+---
+
+<section id="contacts" class="section section--contacts">
+  <SectionHeading
+    eyebrow="connect://open"
+    title="Контакты"
+    description="Сейчас это стартовая версия сайта, поэтому контактные поля вынесены как редактируемые слоты. Реальные ссылки удобно заменить в одном файле данных."
+    emoji={contacts[0].emoji}
+  />
+
+  <div class="contacts-grid">
+    {
+      contacts.map((contact) => (
+        <article class:list={["panel", "contact-card", contact.isPlaceholder && "contact-card--placeholder"]}>
+          <div class="contact-card__top">
+            <div>
+              <p>{contact.label}</p>
+              {
+                contact.href ? (
+                  <a href={contact.href}>{contact.value}</a>
+                ) : (
+                  <strong>{contact.value}</strong>
+                )
+              }
+            </div>
+
+            <Telemoji asset={contact.emoji} size={48} />
+          </div>
+
+          <span>{contact.note}</span>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .section--contacts {
+    padding-bottom: 1rem;
+  }
+
+  .contacts-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-card {
+    display: grid;
+    gap: 1rem;
+    padding: 1.35rem;
+  }
+
+  .contact-card__top {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  p,
+  a,
+  strong,
+  span {
+    margin: 0;
+  }
+
+  p {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  a,
+  strong {
+    display: inline-block;
+    margin-top: 0.45rem;
+    color: var(--color-text);
+    font-size: 1.12rem;
+    line-height: 1.4;
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  span {
+    color: var(--color-text-soft);
+    line-height: 1.7;
+  }
+
+  .contact-card--placeholder {
+    border-style: dashed;
+  }
+
+  @media (max-width: 820px) {
+    .contacts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

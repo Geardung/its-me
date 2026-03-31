@@ -1,0 +1,103 @@
+---
+import type { AboutData } from "../data/profile";
+import SectionHeading from "./SectionHeading.astro";
+
+interface Props {
+  about: AboutData;
+}
+
+const { about } = Astro.props;
+---
+
+<section id="about" class="section section--about">
+  <SectionHeading
+    eyebrow="readme://about-me"
+    title={about.title}
+    description="Коротко о подходе к работе, инженерных приоритетах и том, как я смотрю на продукт целиком."
+    emoji={about.emoji}
+  />
+
+  <div class="about-grid">
+    <div class="panel about-copy">
+      {
+        about.body.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))
+      }
+    </div>
+
+    <div class="panel about-principles">
+      <p class="about-principles__title">working-principles.log</p>
+
+      <ul>
+        {
+          about.principles.map((principle) => (
+            <li>{principle}</li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section--about {
+    display: grid;
+    gap: 1.6rem;
+  }
+
+  .about-grid {
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+  }
+
+  .about-copy,
+  .about-principles {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .about-copy p,
+  .about-principles li {
+    margin: 0;
+    color: var(--color-text-soft);
+    line-height: 1.8;
+  }
+
+  .about-principles__title {
+    margin: 0;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .about-principles ul {
+    display: grid;
+    gap: 0.8rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-principles li {
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .about-principles li::before {
+    content: "/";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

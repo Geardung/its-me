@@ -1,0 +1,123 @@
+---
+import type { SkillGroup } from "../data/profile";
+import SectionHeading from "./SectionHeading.astro";
+import Telemoji from "./Telemoji.astro";
+
+interface Props {
+  skills: SkillGroup[];
+}
+
+const { skills } = Astro.props;
+---
+
+<section id="skills" class="section">
+  <SectionHeading
+    eyebrow="matrix://skills"
+    title="Матрица навыков"
+    description="Основные инженерные направления, в которых я работаю: от схем данных и API до UI, качества релиза и архитектурных компромиссов."
+    emoji={skills[0].emoji}
+  />
+
+  <div class="skills-grid">
+    {
+      skills.map((group) => (
+        <article class="panel skill-card">
+          <div class="skill-card__header">
+            <div>
+              <p class="skill-card__label">domain</p>
+              <h3>{group.title}</h3>
+            </div>
+
+            <Telemoji asset={group.emoji} size={52} />
+          </div>
+
+          <p class="skill-card__summary">{group.summary}</p>
+
+          <ul class="skill-card__items">
+            {
+              group.items.map((item) => (
+                <li>
+                  <div class="skill-card__row">
+                    <strong>{item.name}</strong>
+                    <span>{item.level}</span>
+                  </div>
+                  <p>{item.details}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .skill-card {
+    display: grid;
+    gap: 1.3rem;
+    padding: 1.45rem;
+  }
+
+  .skill-card__header,
+  .skill-card__row {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .skill-card__label,
+  .skill-card__row span {
+    margin: 0;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h3,
+  strong,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    margin-top: 0.35rem;
+    font-size: 1.5rem;
+  }
+
+  .skill-card__summary,
+  .skill-card__items p {
+    color: var(--color-text-soft);
+    line-height: 1.75;
+  }
+
+  .skill-card__items {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skill-card__items li {
+    display: grid;
+    gap: 0.45rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(108, 70, 29, 0.24);
+  }
+
+  @media (max-width: 980px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

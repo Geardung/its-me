@@ -1,0 +1,55 @@
+---
+import Telemoji from "./Telemoji.astro";
+import type { TelemojiAsset } from "../data/profile";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  emoji: TelemojiAsset;
+}
+
+const { eyebrow, title, description, emoji } = Astro.props;
+---
+
+<div class="section-heading">
+  <div class="section-heading__eyebrow">
+    <Telemoji asset={emoji} size={28} />
+    <span>{eyebrow}</span>
+  </div>
+
+  <h2>{title}</h2>
+  <p>{description}</p>
+</div>
+
+<style>
+  .section-heading {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 48rem;
+  }
+
+  .section-heading__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+</style>

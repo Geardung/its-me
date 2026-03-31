@@ -1,0 +1,21 @@
+---
+import type { TelemojiAsset } from "../data/profile";
+
+interface Props {
+  asset: TelemojiAsset;
+  size?: number;
+  className?: string;
+}
+
+const { asset, size = 40, className = "" } = Astro.props;
+---
+
+<img
+  class:list={["telemoji", className]}
+  src={asset.url}
+  alt={asset.alt}
+  width={size}
+  height={size}
+  loading="lazy"
+  decoding="async"
+/>
