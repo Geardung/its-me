@@ -278,7 +278,7 @@ const { hero, name, role } = Astro.props;
     text-transform: uppercase;
   }
 
-  pre {
+  .hero__console pre {
     margin: 0;
     padding: 1rem;
     overflow-x: auto;
@@ -304,6 +304,60 @@ const { hero, name, role } = Astro.props;
     }
   }
 
+  @media (max-width: 760px) {
+    .hero {
+      gap: 1.4rem;
+      padding: 1rem;
+    }
+
+    .hero__title-wrap {
+      gap: 0.45rem;
+    }
+
+    .hero__emoji {
+      right: 0;
+      top: -2.2rem;
+      width: 64px;
+      height: 64px;
+    }
+
+    .hero__summary,
+    .hero__description {
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .hero__summary {
+      font-size: 1.06rem;
+    }
+
+    .hero__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 0.2rem;
+    }
+
+    .hero__actions .button {
+      width: 100%;
+    }
+
+    .hero__focus-list li {
+      align-items: start;
+      min-height: auto;
+      padding: 0.8rem 0.9rem;
+    }
+
+    .hero__card {
+      padding: 0.9rem;
+    }
+
+    .hero__console-meta {
+      flex-wrap: wrap;
+      row-gap: 0.55rem;
+      font-size: 0.72rem;
+    }
+  }
+
   @media (max-width: 640px) {
     h1 {
       max-width: 100%;
@@ -313,6 +367,14 @@ const { hero, name, role } = Astro.props;
 
     .hero__cards {
       grid-template-columns: 1fr;
+    }
+
+    .hero__console pre {
+      padding: 0.85rem;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
   }
 </style>

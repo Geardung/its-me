@@ -52,4 +52,20 @@ const { eyebrow, title, description, emoji } = Astro.props;
     font-size: 1.05rem;
     line-height: 1.7;
   }
+
+  @media (max-width: 760px) {
+    .section-heading {
+      gap: 0.7rem;
+    }
+
+    .section-heading__eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+    }
+
+    p {
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+  }
 </style>

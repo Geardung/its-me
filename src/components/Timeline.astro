@@ -118,4 +118,27 @@ const { entries } = Astro.props;
       border-left: 0;
     }
   }
+
+  @media (max-width: 760px) {
+    .timeline-card {
+      gap: 1rem;
+      padding: 1.1rem;
+    }
+
+    .timeline-card__heading {
+      flex-direction: column;
+      align-items: start;
+      gap: 0.55rem;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    p,
+    li {
+      line-height: 1.65;
+    }
+  }
 </style>

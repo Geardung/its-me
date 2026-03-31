@@ -27,6 +27,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          SITE_URL: https://${{ secrets.DEPLOY_HOST }}
         run: npm run build
 
       - name: Verify dist

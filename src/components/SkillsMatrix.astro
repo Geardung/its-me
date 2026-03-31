@@ -96,6 +96,11 @@ const { skills } = Astro.props;
     display: flex;
     align-items: center;
     gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .skill-card__name strong {
+    overflow-wrap: anywhere;
   }
 
   h3 {
@@ -127,6 +132,32 @@ const { skills } = Astro.props;
   @media (max-width: 980px) {
     .skills-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .skill-card {
+      gap: 1rem;
+      padding: 1.1rem;
+    }
+
+    .skill-card__header {
+      align-items: center;
+    }
+
+    .skill-card__row {
+      flex-direction: column;
+      align-items: start;
+      gap: 0.5rem;
+    }
+
+    .skill-card__items {
+      gap: 0.8rem;
+    }
+
+    .skill-card__summary,
+    .skill-card__items p {
+      line-height: 1.65;
     }
   }
 </style>

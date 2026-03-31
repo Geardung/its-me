@@ -94,6 +94,10 @@ export const profile = {
     title: "Александр | Engineer Biography",
     description:
       "Сайт-биография Александра: backend на Python, интерес к frontend, QA-мышление, Linux-администрирование и системный подход к работе.",
+    siteName: "Александр | Engineer Biography",
+    locale: "ru_RU",
+    ogImageAlt:
+      "Портфолио Александра: backend на Python, frontend growth, QA mindset и инфраструктурный подход.",
   },
   navigation: [
     { label: "Обо мне", href: "#about" },
