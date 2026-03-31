@@ -40,7 +40,10 @@ const { hero, name, role } = Astro.props;
     <ul class="hero__focus-list">
       {
         hero.focus.map((item) => (
-          <li>{item}</li>
+          <li>
+            <Telemoji asset={item.emoji} size={28} />
+            <span>{item.label}</span>
+          </li>
         ))
       }
     </ul>
@@ -51,7 +54,10 @@ const { hero, name, role } = Astro.props;
       {
         hero.capabilityCards.map((card) => (
           <article class="hero__card">
-            <span>{card.label}</span>
+            <div class="hero__card-head">
+              <span>{card.label}</span>
+              <Telemoji asset={card.emoji} size={26} />
+            </div>
             <strong>{card.value}</strong>
           </article>
         ))
@@ -135,10 +141,11 @@ const { hero, name, role } = Astro.props;
   }
 
   h1 {
-    max-width: 12ch;
+    max-width: 10ch;
     margin: 0;
-    font-size: clamp(3.1rem, 7vw, 6rem);
-    line-height: 0.96;
+    font-size: clamp(2.5rem, 5.2vw, 4.8rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
     text-wrap: balance;
   }
 
@@ -188,11 +195,8 @@ const { hero, name, role } = Astro.props;
     color: var(--color-text-soft);
   }
 
-  .hero__focus-list li::before {
-    content: ">";
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: 1rem;
+  .hero__focus-list li span {
+    flex: 1;
   }
 
   .hero__side {
@@ -213,6 +217,13 @@ const { hero, name, role } = Astro.props;
     border: 1px solid var(--color-border);
     border-radius: 1rem;
     background: linear-gradient(180deg, rgba(247, 236, 214, 0.72), rgba(233, 217, 187, 0.5));
+  }
+
+  .hero__card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
   }
 
   .hero__card span {
@@ -282,6 +293,11 @@ const { hero, name, role } = Astro.props;
       grid-template-columns: 1fr;
     }
 
+    h1 {
+      max-width: 12ch;
+      font-size: clamp(2.7rem, 8vw, 4.2rem);
+    }
+
     .hero__emoji {
       right: 0;
       top: -1.5rem;
@@ -289,6 +305,12 @@ const { hero, name, role } = Astro.props;
   }
 
   @media (max-width: 640px) {
+    h1 {
+      max-width: 100%;
+      font-size: clamp(2.2rem, 11vw, 3.2rem);
+      line-height: 0.96;
+    }
+
     .hero__cards {
       grid-template-columns: 1fr;
     }

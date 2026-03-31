@@ -18,10 +18,14 @@ export type HeroData = {
     label: string;
     href: string;
   };
-  focus: string[];
+  focus: Array<{
+    label: string;
+    emoji: TelemojiAsset;
+  }>;
   capabilityCards: Array<{
     label: string;
     value: string;
+    emoji: TelemojiAsset;
   }>;
   terminalLines: string[];
   emoji: TelemojiAsset;
@@ -42,6 +46,7 @@ export type SkillGroup = {
     name: string;
     level: string;
     details: string;
+    emoji: TelemojiAsset;
   }>;
 };
 
@@ -79,16 +84,16 @@ const telemoji = (
   group,
   name,
   alt,
-  url: `https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/${encodeURIComponent(group)}/${encodeURIComponent(name)}.webp`,
+  url: `/emojis/${encodeURIComponent(group)}/${encodeURIComponent(name)}.webp`,
 });
 
 export const profile = {
-  name: "Tedeshi",
-  role: "Backend / Frontend / QA Engineer",
+  name: "Александр",
+  role: "Backend Developer / Frontend Starter / QA-minded Engineer",
   meta: {
-    title: "Tedeshi | Engineer Biography",
+    title: "Александр | Engineer Biography",
     description:
-      "Статический сайт-биография разработчика: backend, frontend, QA, инженерное мышление и кейсы с фокусом на результат.",
+      "Сайт-биография Александра: backend на Python, интерес к frontend, QA-мышление, Linux-администрирование и системный подход к работе.",
   },
   navigation: [
     { label: "Обо мне", href: "#about" },
@@ -99,11 +104,11 @@ export const profile = {
   ],
   hero: {
     eyebrow: "sepia://engineering-profile",
-    title: "Строю продукты от схемы данных и API до интерфейса и контроля качества.",
+    title: "Пишу backend, осваиваю frontend и всегда проверяю, чтобы всё реально работало.",
     summary:
-      "Мне интересен полный инженерный контур: продумать архитектуру, собрать надёжный backend, довести UX до внятного состояния и закрыть риски тестированием.",
+      "Основной рабочий вектор для меня это backend-разработка, в первую очередь на Python. Параллельно я постепенно углубляюсь во frontend, ручное и автотестирование, а также в инфраструктурную часть вокруг Linux и деплоя.",
     description:
-      "Этот сайт собран как программное досье: без лишнего пафоса, зато с явной структурой, понятной системой навыков и кейсами, которые показывают, как я думаю и работаю.",
+      "Мне комфортно там, где есть удалённая работа, понятные процессы и нормальная система постановки задач. Я люблю, когда разработка ведётся не хаотично в переписке, а через GitHub Issues, Jira, Slack или любой другой внятный трекер.",
     ctaPrimary: {
       label: "Смотреть кейсы",
       href: "#projects",
@@ -113,43 +118,75 @@ export const profile = {
       href: "#contacts",
     },
     focus: [
-      "API-first подход и ясные контракты",
-      "Инженерный UX без визуального шума",
-      "Тестирование как часть delivery, а не постфактум",
-      "Релизная дисциплина, наблюдаемость и контроль качества",
+      {
+        label: "Python как основной язык для backend-задач",
+        emoji: telemoji("Smileys", "Smiling Face With Sunglasses"),
+      },
+      {
+        label: "FastAPI + PostgreSQL + Alembic + SQLAlchemy + SQL",
+        emoji: telemoji("Smileys", "Face With Monocle"),
+      },
+      {
+        label: "React и Vue как точки входа во frontend",
+        emoji: telemoji("Smileys", "Star Struck"),
+      },
+      {
+        label: "QA-мышление: после Cursor проверять руками и тестами обязательно",
+        emoji: telemoji("Smileys", "Thinking Face"),
+      },
     ],
     capabilityCards: [
-      { label: "Primary lane", value: "Backend systems" },
-      { label: "Secondary lane", value: "Frontend delivery" },
-      { label: "Quality gate", value: "QA mindset" },
-      { label: "Operating mode", value: "Product + engineering" },
+      {
+        label: "Primary lane",
+        value: "Python backend",
+        emoji: telemoji("Smileys", "Robot"),
+      },
+      {
+        label: "Secondary lane",
+        value: "React / Vue basics",
+        emoji: telemoji("Smileys", "Partying Face"),
+      },
+      {
+        label: "Quality gate",
+        value: "Manual + auto QA",
+        emoji: telemoji("Smileys", "Face With Monocle"),
+      },
+      {
+        label: "Ops lane",
+        value: "Linux / Nginx / CI/CD",
+        emoji: telemoji("Smileys", "Face With Raised Eyebrow"),
+      },
     ],
     terminalLines: [
       "$ whoami",
-      "tedeshi",
+      "alexander",
       "",
-      "$ cat areas.txt",
-      "backend",
-      "frontend",
-      "qa",
-      "architecture",
+      "$ cat stack.txt",
+      "python",
+      "fastapi",
+      "postgresql",
+      "alembic",
+      "sqlalchemy",
+      "react",
+      "vue",
+      "linux",
       "",
-      "$ echo $MISSION",
-      "Build reliable software with taste",
+      "$ echo $WORK_MODE",
+      "remote + structured tasks + reliable delivery",
     ],
     emoji: telemoji("Smileys", "Robot"),
   } satisfies HeroData,
   about: {
     title: "Обо мне",
     body: [
-      "Мне близок формат инженера широкого профиля: я не замыкаюсь на одном слое продукта, а смотрю на систему целиком. Поэтому для меня важны не только код и фреймворки, но и данные, сценарии пользователя, деградации, edge cases и качество релиза.",
-      "Сильнее всего меня драйвит момент, когда сложная задача превращается в прозрачную систему: с понятной схемой, аккуратным интерфейсом, измеримыми рисками и предсказуемым поведением в продакшене.",
+      "Меня зовут Александр, я родился 22.07.2004. Учился в НКСЭ по специальности «Программирование в компьютерных системах», так что профильная база и диплом у меня есть, даже если в IT реальная ценность всё равно чаще всего определяется не корочкой, а тем, что ты умеешь делать руками.",
+      "Опыт у меня разный: и фриланс, и работа на небольшую компанию в городе. Для меня большой плюс это удалённый формат, потому что я действительно много времени провожу за компьютером и спокойно, глубоко вникаю в задачи, когда рабочая среда выстроена вокруг нормального инженерного процесса.",
     ],
     principles: [
-      "Предпочитаю ясные интерфейсы между слоями вместо магии.",
-      "Люблю, когда backend, frontend и QA думают об одном продукте, а не о трёх разных.",
-      "Считаю хорошим решением то, которое можно поддерживать и объяснить через полгода.",
-      "Не отделяю скорость от качества: быстрый релиз хорош только тогда, когда он устойчив.",
+      "Лучше всего работаю там, где задачи ведутся системно, а не теряются в переписке.",
+      "Без проблем переношу договорённости в GitHub, Jira, Slack и другие рабочие инструменты.",
+      "Cursor ускоряет работу, но не отменяет ответственность за результат и проверку кода.",
+      "Предпочитаю понятный процесс, в котором видно, что делаем, зачем и на каком этапе это находится.",
     ],
     emoji: telemoji("Smileys", "Nerd Face"),
   } satisfies AboutData,
@@ -157,208 +194,213 @@ export const profile = {
     {
       title: "Backend",
       summary:
-        "Проектирование сервисов, схем данных, API-контрактов и сценариев, которые выдерживают реальную эксплуатацию.",
+        "Основная зона моей уверенности. Могу писать backend практически на любом языке, но основной рабочий код у меня был и остаётся на Python.",
       emoji: telemoji("Smileys", "Thinking Face"),
       items: [
         {
-          name: "API design",
+          name: "Python backend",
           level: "Strong",
-          details: "REST, явные DTO, валидация входа и устойчивые контракты.",
+          details: "Основной язык для серверной логики, API, бизнес-правил и прикладной разработки.",
+          emoji: telemoji("Smileys", "Nerd Face"),
         },
         {
-          name: "Data modeling",
+          name: "FastAPI + database stack",
           level: "Strong",
-          details: "Сущности, связи, миграционное мышление и аккуратная эволюция схемы.",
+          details: "FastAPI, PostgreSQL, Alembic, SQLAlchemy и SQL как основной прикладной набор.",
+          emoji: telemoji("Smileys", "Face Savoring Food"),
         },
         {
-          name: "Reliability",
-          level: "Strong",
-          details: "Логирование, наблюдаемость, graceful degradation, обработка ошибок.",
+          name: "Go",
+          level: "Starter",
+          details: "Был практический опыт и интерес к Go, но основной production-фокус пока не на нём.",
+          emoji: telemoji("Smileys", "Cowboy Hat Face"),
         },
       ],
     },
     {
       title: "Frontend",
       summary:
-        "Собираю интерфейсы, где структура, скорость чтения и иерархия важнее визуального шума.",
+        "Frontend я начал щупать относительно недавно. Пока не считаю себя сильным верстальщиком, но уже уверенно понимаю, как привязывать методы и логику к интерфейсу.",
       emoji: telemoji("Smileys", "Smiling Face With Sunglasses"),
       items: [
         {
-          name: "UI composition",
-          level: "Strong",
-          details: "Компонентный подход, семантическая разметка и ясная композиция экранов.",
+          name: "React",
+          level: "Working",
+          details: "Пробовал собирать компоненты, привязывать обработчики и работать с базовой структурой приложения.",
+          emoji: telemoji("Smileys", "Smiling Face With Sunglasses"),
         },
         {
-          name: "Design systems",
+          name: "Vue",
           level: "Working",
-          details: "Токены, повторяемые паттерны, консистентность состояний и типографики.",
+          details: "Есть первый практический опыт и понимание общей логики компонентного подхода.",
+          emoji: telemoji("Smileys", "Star Struck"),
         },
         {
-          name: "Performance",
+          name: "Интеграция логики в UI",
           level: "Working",
-          details: "Статическая генерация, разумная гидратация, контроль веса и загрузки.",
+          details: "Верстаю не идеально, но связать методы, данные и поведение интерфейса у меня получается.",
+          emoji: telemoji("Smileys", "Hugging Face"),
         },
       ],
     },
     {
       title: "QA",
       summary:
-        "Смотрю на качество не как на чеклист, а как на систему защиты продукта от регрессий и неочевидных сценариев.",
+        "Навык QA вырос не из теории, а из практики: если используешь ускоряющие инструменты, особенно AI, нужно уметь проверять результат и руками, и тестами.",
       emoji: telemoji("Smileys", "Face With Monocle"),
       items: [
         {
-          name: "Test strategy",
-          level: "Strong",
-          details: "Риск-ориентированная проверка, критические сценарии и приоритеты покрытия.",
+          name: "Manual testing",
+          level: "Working",
+          details: "Проверяю сценарии руками, если нужно быстро подтвердить, что фича реально живая.",
+          emoji: telemoji("Smileys", "Face With Monocle"),
         },
         {
-          name: "Regression control",
-          level: "Strong",
-          details: "Проверка happy-path, edge cases и связей между слоями продукта.",
+          name: "Autotests mindset",
+          level: "Working",
+          details: "Понимаю ценность автопроверок как защиты от регрессий и неочевидных поломок.",
+          emoji: telemoji("Smileys", "Face Holding Back Tears"),
         },
         {
-          name: "Release confidence",
+          name: "Self-review discipline",
           level: "Strong",
-          details: "Дымовые сценарии, acceptance thinking и контроль бизнес-рисков.",
+          details: "Не доверяю слепо инструменту, даже если он ускоряет разработку. Проверка обязательна.",
+          emoji: telemoji("Smileys", "Face With Raised Eyebrow"),
         },
       ],
     },
     {
-      title: "Architecture",
+      title: "Ops / Infrastructure",
       summary:
-        "Умею держать в голове целую систему: ограничения, компромиссы, будущие расширения и цену ошибок.",
+        "По инфраструктуре я не чистый DevOps, но на уверенном среднем уровне могу администрировать Linux-сервера и сопровождать небольшой деплой.",
       emoji: telemoji("Smileys", "Face With Raised Eyebrow"),
       items: [
         {
-          name: "System thinking",
-          level: "Strong",
-          details: "Связи между доменом, интерфейсами, инфраструктурой и эксплуатацией.",
-        },
-        {
-          name: "Trade-offs",
-          level: "Strong",
-          details: "Выбор решений по цене поддержки, скорости доставки и уровню риска.",
-        },
-        {
-          name: "Documentation discipline",
+          name: "Linux administration",
           level: "Working",
-          details: "Краткие, но полезные описания архитектурных решений и границ системы.",
+          details: "Зайти на сервер, поднять сервис, поправить конфиги и привести окружение в рабочее состояние.",
+          emoji: telemoji("Smileys", "Saluting Face"),
+        },
+        {
+          name: "Web server setup",
+          level: "Working",
+          details: "Nginx, Apache, systemd и базовая эксплуатация сервисов на хостинге или VPS.",
+          emoji: telemoji("Smileys", "Smiling Face"),
+        },
+        {
+          name: "CI/CD basics",
+          level: "Working",
+          details: "GitHub и GitHub Actions для небольших пайплайнов сборки и деплоя.",
+          emoji: telemoji("Smileys", "Grinning Face With Smiling Eyes"),
         },
       ],
     },
   ] satisfies SkillGroup[],
   timeline: [
     {
-      period: "Phase 01",
-      title: "От интереса к коду к системному мышлению",
+      period: "2004",
+      title: "Старт",
       description:
-        "Фокус сместился с написания отдельных фич на понимание того, как вместе работают данные, контракты, интерфейсы и качество.",
+        "Родился 22 июля 2004 года. Интерес к компьютерам довольно быстро перешёл в интерес к программированию и прикладной разработке.",
       outcomes: [
-        "Начал смотреть на задачи не по слоям, а по сквозному пользовательскому сценарию.",
-        "Стал сильнее ценить простую архитектуру, понятные договорённости и устойчивые решения.",
+        "Рано сформировалась привычка много времени проводить за компьютером и учиться через практику.",
+        "Интерес к коду постепенно стал не хобби, а рабочим направлением.",
       ],
       emoji: telemoji("Smileys", "Saluting Face"),
     },
     {
-      period: "Phase 02",
-      title: "Углубление в backend и дисциплину delivery",
+      period: "НКСЭ",
+      title: "Обучение на программиста",
       description:
-        "На первый план вышли схемы данных, поведение API, обработка ошибок и понимание того, что хороший сервис живёт не только на локальной машине.",
+        "Учился в НКСЭ по специальности «Программирование в компьютерных системах». Получил профильную базу и корочку, но основной рост всё равно происходил через реальную практику.",
       outcomes: [
-        "Начал думать миграциями, версиями контрактов и эксплуатационными последствиями изменений.",
-        "Собрал инженерный взгляд на релиз как на процесс, а не на кнопку deploy.",
+        "Освоил фундамент, который позже начал применять на реальных задачах.",
+        "Укрепился в мысли, что в IT ценится не формальный статус, а рабочий результат.",
       ],
       emoji: telemoji("Smileys", "Thinking Face"),
     },
     {
-      period: "Phase 03",
-      title: "Расширение в frontend и качество пользовательского опыта",
+      period: "Freelance",
+      title: "Разный коммерческий опыт",
       description:
-        "Параллельно усилился интерес к интерфейсам: важно не только чтобы работало, но и чтобы читалось, вело пользователя и не ломалось под нагрузкой изменений.",
+        "Работал как на фрилансе, так и на небольшую компанию в городе. Это дало опыт разных форматов взаимодействия, задач и уровня ответственности.",
       outcomes: [
-        "Фокус на семантике, структуре экрана и ясной иерархии контента.",
-        "Привычка проверять продукт глазами пользователя, а не только автора кода.",
+        "Столкнулся не только с кодом, но и с реальной организацией работы.",
+        "Понял, насколько важны нормальные процессы и прозрачная постановка задач.",
       ],
       emoji: telemoji("Smileys", "Star Struck"),
     },
     {
-      period: "Phase 04",
-      title: "QA как часть инженерной ответственности",
+      period: "Now",
+      title: "Backend как основа, frontend и QA как усиление",
       description:
-        "Тестирование перестало быть отдельным этапом и стало частью того, как принимаются решения ещё до написания кода.",
+        "Сейчас мой основной практический стек это Python backend, но параллельно я развиваюсь во frontend, тестировании и инфраструктуре, чтобы быть полезным не в одной узкой роли, а в целом рабочем контуре команды.",
       outcomes: [
-        "Появился устойчивый навык искать слабые места до релиза.",
-        "Укрепился подход, где качество встроено в процесс разработки.",
+        "Использую Cursor как ускоритель, но не как замену инженерной проверке.",
+        "Ищу команду, где есть удалёнка, внятный workflow и задачи, которые живут в системе, а не в хаотичной переписке.",
       ],
       emoji: telemoji("Smileys", "Face With Monocle"),
     },
   ] satisfies TimelineEntry[],
   projects: [
     {
-      name: "API-First Service Blueprint",
-      role: "Backend / Architecture",
+      name: "Backend API и прикладная логика",
+      role: "Backend / Python",
       summary:
-        "Шаблон проектирования сервиса, где сначала определяются сущности, контракты, сценарии ошибок и только потом идёт реализация.",
-      stack: ["Domain modeling", "REST", "Validation", "Error handling"],
+        "Основной формат задач, в котором я чувствую себя увереннее всего: API, модели данных, работа с БД, миграциями и бизнес-логикой.",
+      stack: ["Python", "FastAPI", "PostgreSQL", "Alembic", "SQLAlchemy"],
       impact: [
-        "Помогает быстрее согласовывать поведение сервиса между backend, frontend и QA.",
-        "Снижает количество неявных решений, которые обычно всплывают уже после релиза.",
+        "Могу быстро включаться в серверную часть и писать прикладной код под реальные сценарии продукта.",
+        "Учитываю, что изменения в базе и API должны переживать уже существующие данные и текущих пользователей.",
       ],
       emoji: telemoji("Smileys", "Robot"),
     },
     {
-      name: "Release Confidence Flow",
+      name: "Проверка качества и здравый скепсис к AI",
       role: "QA / Delivery",
       summary:
-        "Подход к релизу, где критические сценарии, smoke checks и регрессионные риски собраны в единый понятный поток проверки.",
-      stack: ["Smoke testing", "Acceptance thinking", "Regression control"],
+        "Работа с AI-инструментами вроде Cursor не уменьшила мою внимательность, а наоборот заставила сильнее развить привычку проверять результат.",
+      stack: ["Manual testing", "Autotests", "Regression mindset", "Self-review"],
       impact: [
-        "Делает релиз предсказуемее и помогает быстрее находить зоны риска.",
-        "Переводит тестирование из разрозненных проверок в инженерную систему уверенности.",
+        "Лучше вижу, где код может выглядеть правильным, но вести себя неправильно.",
+        "Сильнее ценю проверку сценариев до того, как ошибка доедет до пользователей или заказчика.",
       ],
       emoji: telemoji("Smileys", "Face With Monocle"),
     },
     {
-      name: "Static Bio Interface",
-      role: "Frontend / Design engineering",
+      name: "Небольшая инфраструктура и развёртывание",
+      role: "Linux / CI-CD",
       summary:
-        "Статический интерфейс-портфолио в инженерной эстетике: понятная структура, акцент на содержании и минимум лишней клиентской сложности.",
-      stack: ["Astro", "Static build", "Component layout", "Visual system"],
+        "Когда проект небольшой, могу не только написать код, но и помочь с развёртыванием, сервисами и базовой эксплуатацией на Linux.",
+      stack: ["Linux", "Nginx", "Apache", "systemd", "GitHub Actions"],
       impact: [
-        "Показывает навыки через форму: архитектура, UI-мышление и внимание к качеству реализации.",
-        "Даёт основу, которую легко развивать в полноценное инженерное портфолио.",
+        "Могу закрыть часть задач вокруг демонов, конфигов и автоматического билда или деплоя.",
+        "Это полезно для небольших команд, где важно уметь брать на себя больше одной зоны ответственности.",
       ],
-      emoji: telemoji("Smileys", "Smiling Face With Sunglasses"),
+      emoji: telemoji("Smileys", "Face With Raised Eyebrow"),
     },
   ] satisfies ProjectCard[],
   contacts: [
     {
       label: "Telegram",
-      value: "@your_handle",
-      note: "Подставьте ваш реальный username.",
-      isPlaceholder: true,
+      value: "t.me/old6oy",
+      href: "https://t.me/old6oy",
+      note: "Быстрый способ написать напрямую.",
       emoji: telemoji("Smileys", "Slightly Smiling Face"),
     },
     {
       label: "GitHub",
-      value: "github.com/your-handle",
-      note: "Ссылка на публичный профиль или pin-репозитории.",
-      isPlaceholder: true,
+      value: "github.com/Geardung",
+      href: "https://github.com/Geardung",
+      note: "Профиль с кодом, репозиториями и активностью.",
       emoji: telemoji("Smileys", "Robot"),
     },
     {
       label: "Email",
-      value: "hello@your-domain.dev",
-      note: "Рабочий контакт для обсуждения проектов и сотрудничества.",
-      isPlaceholder: true,
+      value: "geardung@ya.ru",
+      href: "mailto:geardung@ya.ru",
+      note: "Для предложений по работе и более формальной связи.",
       emoji: telemoji("Smileys", "Face Exhaling"),
-    },
-    {
-      label: "Resume",
-      value: "resume.pdf",
-      note: "Можно заменить на PDF, Notion или отдельную страницу.",
-      isPlaceholder: true,
-      emoji: telemoji("Smileys", "Saluting Face"),
     },
   ] satisfies ContactLink[],
 } as const;

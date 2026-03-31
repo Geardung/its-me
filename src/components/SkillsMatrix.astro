@@ -38,7 +38,10 @@ const { skills } = Astro.props;
               group.items.map((item) => (
                 <li>
                   <div class="skill-card__row">
-                    <strong>{item.name}</strong>
+                    <div class="skill-card__name">
+                      <Telemoji asset={item.emoji} size={24} />
+                      <strong>{item.name}</strong>
+                    </div>
                     <span>{item.level}</span>
                   </div>
                   <p>{item.details}</p>
@@ -87,6 +90,12 @@ const { skills } = Astro.props;
   strong,
   p {
     margin: 0;
+  }
+
+  .skill-card__name {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
   }
 
   h3 {
