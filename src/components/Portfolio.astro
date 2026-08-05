@@ -1,0 +1,376 @@
+---
+interface PortfolioItem {
+  name: string;
+  description: string;
+  tags: string[];
+  link?: string;
+  image?: string;
+  video?: string;
+  placeholderClass?: string;
+  confidential?: boolean;
+}
+
+interface Props {
+  items: PortfolioItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section id="portfolio" class="section">
+  <div class="portfolio-header">
+    <div class="portfolio-eyebrow">
+      <span>portfolio://works</span>
+    </div>
+    <h2 class="portfolio-header__title">
+      <a href="#portfolio" class="portfolio-header__anchor" aria-label="Ссылка на раздел: Портфолио">#</a>
+      Портфолио
+    </h2>
+    <p>Примеры работ — от лендингов до сложных веб-приложений.</p>
+  </div>
+
+  <div class="portfolio-grid">
+    {
+      items.map((item) => (
+        <article class:list={["panel", "portfolio-card", item.confidential && "portfolio-card--confidential"]}>
+          {item.confidential ? (
+            <div class:list={["portfolio-card__image", "portfolio-card__placeholder", "portfolio-card__placeholder--nda"]}>
+              <div class="portfolio-card__nda-lock">🔒</div>
+              <span class="portfolio-card__nda-label">Confidential / NDA</span>
+            </div>
+          ) : item.image ? (
+            <a href={item.link} class="portfolio-card__image-link">
+              <div class:list={["portfolio-card__image", item.video && "portfolio-card__image--has-video"]}>
+                <img src={item.image} alt={item.name} loading="lazy" />
+                {item.video && (
+                  <video class="portfolio-card__video" muted loop playsinline preload="none">
+                    <source src={item.video} type="video/mp4" />
+                  </video>
+                )}
+              </div>
+            </a>
+          ) : (
+            <a href={item.link} class="portfolio-card__image-link">
+              <div class:list={["portfolio-card__image", "portfolio-card__placeholder", item.placeholderClass && item.placeholderClass]}>
+                <span class="portfolio-card__placeholder-text">{item.name}</span>
+              </div>
+            </a>
+          )}
+          <div class="portfolio-card__content">
+            <div class="portfolio-card__header">
+              <h3>{item.name}</h3>
+              {item.confidential && (
+                <span class="portfolio-card__confidential-badge">NDA</span>
+              )}
+            </div>
+            <p>{item.description}</p>
+            <div class="portfolio-card__tags">
+              {item.tags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </div>
+            {item.confidential ? (
+              <span class="portfolio-card__nda-note">
+                Детали проекта скрыты по условиям NDA. Доступны по запросу.
+              </span>
+            ) : item.link ? (
+              <a href={item.link} target="_blank" rel="noopener" class="portfolio-card__link">
+                Смотреть проект
+              </a>
+            ) : null}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .portfolio-header {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 48rem;
+    margin-bottom: 2rem;
+  }
+
+  .portfolio-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-header h2,
+  .portfolio-header__title {
+    position: relative;
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .portfolio-header__anchor {
+    position: absolute;
+    right: 100%;
+    margin-right: 0.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    line-height: 1;
+  }
+
+  .portfolio-header__title:hover .portfolio-header__anchor,
+  .portfolio-header__anchor:hover {
+    opacity: 1;
+  }
+
+  .portfolio-header p {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portfolio-card {
+    display: grid;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .portfolio-card__image-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .portfolio-card__image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-panel-soft);
+  }
+
+  .portfolio-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .portfolio-card__image-link:hover .portfolio-card__image img {
+    transform: scale(1.03);
+  }
+
+  .portfolio-card__image--has-video img {
+    opacity: 1;
+  }
+
+  .portfolio-card__image--has-video .portfolio-card__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .portfolio-card__image--has-video:hover img {
+    opacity: 0;
+  }
+
+  .portfolio-card__image--has-video:hover .portfolio-card__video {
+    opacity: 1;
+  }
+
+  .portfolio-card__image {
+    position: relative;
+  }
+
+  .portfolio-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 50%, #1a1a2e 100%);
+  }
+
+  .portfolio-card__placeholder--jojo {
+    background: linear-gradient(135deg, #1a1a2e 0%, #3d2b1f 50%, #1a1a2e 100%);
+  }
+
+  .portfolio-card__placeholder--noez {
+    background: linear-gradient(135deg, #0A1628 0%, #1B3A5C 50%, #0A1628 100%);
+  }
+
+  .portfolio-card__placeholder-text {
+    color: rgba(212, 165, 116, 0.6);
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-card__placeholder--nda {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a1f1f 30%, #1a1a2e 60%, #2a1f1f 100%);
+    background-size: 200% 200%;
+    animation: nda-shimmer 4s ease-in-out infinite;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  @keyframes nda-shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .portfolio-card__nda-lock {
+    font-size: 2.4rem;
+    opacity: 0.5;
+  }
+
+  .portfolio-card__nda-label {
+    color: rgba(212, 165, 116, 0.45);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .portfolio-card__confidential-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid rgba(212, 100, 100, 0.35);
+    border-radius: 0.3rem;
+    background: rgba(212, 100, 100, 0.1);
+    color: rgba(212, 130, 130, 0.8);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .portfolio-card__nda-note {
+    color: var(--color-text-soft);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  .portfolio-card--confidential {
+    opacity: 0.85;
+  }
+
+  .portfolio-card__content {
+    display: grid;
+    gap: 0.8rem;
+    padding: 1.3rem;
+  }
+
+  .portfolio-card__content h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .portfolio-card__content p {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .portfolio-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .portfolio-card__tags span {
+    padding: 0.35rem 0.65rem;
+    border: 1px solid rgba(108, 70, 29, 0.24);
+    border-radius: 999px;
+    background: rgba(245, 233, 208, 0.55);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .portfolio-card__link:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 760px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .portfolio-header__anchor {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const videoCards = document.querySelectorAll(".portfolio-card__image--has-video");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target.querySelector("video") as HTMLVideoElement;
+        if (!video) return;
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0 }
+  );
+
+  videoCards.forEach((card) => {
+    observer.observe(card);
+    card.addEventListener("mouseenter", () => {
+      const video = card.querySelector("video") as HTMLVideoElement;
+      if (video) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }
+    });
+  });
+</script>

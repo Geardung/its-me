@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>АО «НОЭЗ» — Новороссийский опытно-экспериментальный завод</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       TOKEN SYSTEM — АО «НОЭЗ»
+       ======================================== */
+    :root {
+      --ink: #0A1628;
+      --navy: #1B3A5C;
+      --steel: #4A6D8C;
+      --cloud: #8FA8BE;
+      --frost: #D4DFE8;
+      --paper: #F0F3F7;
+      --white: #FFFFFF;
+      --amber: #C07A2E;
+      --amber-light: #E8A84C;
+      --amber-dark: #9A5F1E;
+      --rule: rgba(27, 58, 92, 0.12);
+      --rule-dark: rgba(27, 58, 92, 0.25);
+
+      --ff-display: 'PT Serif', Georgia, 'Times New Roman', serif;
+      --ff-body: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+
+      --fs-hero: clamp(2.2rem, 5vw, 3.6rem);
+      --fs-h1: clamp(1.8rem, 3.5vw, 2.6rem);
+      --fs-h2: clamp(1.4rem, 2.5vw, 1.8rem);
+      --fs-h3: 1.15rem;
+      --fs-body: 1rem;
+      --fs-small: 0.875rem;
+      --fs-caption: 0.78rem;
+
+      --lh-display: 1.15;
+      --lh-body: 1.65;
+
+      --max-w: 1140px;
+      --max-w-narrow: 820px;
+      --gutter: clamp(1rem, 3vw, 2.5rem);
+
+      --transition: 0.2s ease;
+    }
+
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--ff-body);
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      color: var(--ink);
+      background: var(--white);
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: var(--navy); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--amber); }
+
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter); }
+    .container--narrow { max-width: var(--max-w-narrow); }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+    h1, h2, h3, h4 {
+      font-family: var(--ff-display);
+      line-height: var(--lh-display);
+      color: var(--ink);
+    }
+
+    .eyebrow {
+      font-family: var(--ff-body);
+      font-size: var(--fs-caption);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    .section-title {
+      font-size: var(--fs-h1);
+      margin-bottom: 0.4em;
+    }
+
+    .section-subtitle {
+      font-size: var(--fs-h2);
+      margin-bottom: 0.4em;
+    }
+
+    .lead {
+      font-size: 1.1rem;
+      color: var(--steel);
+      max-width: 640px;
+    }
+
+    /* ========================================
+       TOP BAR (corporate identifier)
+       ======================================== */
+    .topbar {
+      background: var(--ink);
+      color: var(--frost);
+      font-size: var(--fs-caption);
+      padding: 0.5rem 0;
+    }
+
+    .topbar__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .topbar__company {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .topbar__right {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .topbar a { color: var(--cloud); }
+    .topbar a:hover { color: var(--white); }
+
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--steel);
+      border-radius: 3px;
+      overflow: hidden;
+      font-size: 0.7rem;
+    }
+
+    .lang-switch a {
+      padding: 0.15rem 0.5rem;
+      color: var(--cloud);
+      transition: background var(--transition), color var(--transition);
+    }
+
+    .lang-switch a.active,
+    .lang-switch a:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* ========================================
+       HEADER / NAV
+       ======================================== */
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      gap: 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .logo__mark {
+      width: 42px;
+      height: 42px;
+    }
+
+    .logo__text {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .logo__text span {
+      display: block;
+      font-size: var(--fs-caption);
+      font-family: var(--ff-body);
+      font-weight: 400;
+      color: var(--steel);
+      letter-spacing: 0.02em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav a {
+      padding: 0.5rem 1rem;
+      font-size: var(--fs-small);
+      font-weight: 600;
+      color: var(--ink);
+      position: relative;
+      transition: color var(--transition);
+    }
+
+    .nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 2px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transition: transform var(--transition);
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    .nav a:hover { color: var(--navy); }
+
+    .header__phone {
+      font-weight: 600;
+      font-size: var(--fs-small);
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .hamburger svg { width: 24px; height: 24px; color: var(--ink); }
+
+    /* ========================================
+       HERO
+       ======================================== */
+    .hero {
+      background: linear-gradient(135deg, var(--ink) 0%, var(--navy) 55%, var(--steel) 100%);
+      color: var(--white);
+      padding: clamp(4rem, 10vw, 7rem) 0 clamp(3rem, 8vw, 5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -10%;
+      width: 60%;
+      height: 160%;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 18px,
+        rgba(255,255,255,0.02) 18px,
+        rgba(255,255,255,0.02) 19px
+      );
+      pointer-events: none;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+
+    .hero__eyebrow {
+      font-family: var(--ff-body);
+      font-size: var(--fs-caption);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: var(--fs-hero);
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--cloud);
+      max-width: 580px;
+      margin-bottom: 2rem;
+    }
+
+    .hero__stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .stat__number {
+      font-family: var(--ff-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--amber-light);
+      line-height: 1;
+    }
+
+    .stat__label {
+      font-size: var(--fs-small);
+      color: var(--cloud);
+      margin-top: 0.3rem;
+    }
+
+    /* ========================================
+       SECTION DIVIDER — AMBER ACCENT BAR
+       ======================================== */
+    .accent-bar {
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber), var(--amber-light), transparent);
+      width: 100%;
+    }
+
+    /* ========================================
+       ABOUT SECTION
+       ======================================== */
+    .about {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: start;
+    }
+
+    .about__text p {
+      margin-bottom: 1.2rem;
+      color: var(--ink);
+    }
+
+    .about__text p:last-child { margin-bottom: 0; }
+
+    .about__info {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 2rem;
+    }
+
+    .about__info h3 {
+      font-size: var(--fs-h3);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--amber);
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: var(--fs-small);
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    .info-row dt {
+      color: var(--steel);
+      flex-shrink: 0;
+      margin-right: 1rem;
+    }
+
+    .info-row dd {
+      font-weight: 600;
+      text-align: right;
+      color: var(--ink);
+    }
+
+    /* ========================================
+       DIRECTIONS (production areas)
+       ======================================== */
+    .directions {
+      background: var(--paper);
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+
+    .directions__header {
+      text-align: center;
+      margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .directions__header .lead { margin: 0.8rem auto 0; }
+
+    .directions__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .dir-card {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      padding: 2rem 1.5rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+    }
+
+    .dir-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+
+    .dir-card:hover { border-color: var(--cloud); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .dir-card:hover::before { transform: scaleX(1); }
+
+    .dir-card__icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      color: var(--navy);
+    }
+
+    .dir-card h3 {
+      font-size: var(--fs-h3);
+      margin-bottom: 0.6rem;
+    }
+
+    .dir-card p {
+      font-size: var(--fs-small);
+      color: var(--steel);
+      line-height: 1.6;
+    }
+
+    /* ========================================
+       SHAREHOLDERS
+       ======================================== */
+    .shareholders {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+
+    .docs-list {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+
+    .docs-list li {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .docs-list a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      gap: 1rem;
+      font-size: var(--fs-small);
+    }
+
+    .docs-list a:hover { color: var(--amber); }
+
+    .doc-date {
+      font-size: var(--fs-caption);
+      color: var(--cloud);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .doc-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      color: var(--steel);
+    }
+
+    /* ========================================
+       CTA BAND
+       ======================================== */
+    .cta-band {
+      background: var(--navy);
+      color: var(--white);
+      padding: clamp(2.5rem, 5vw, 4rem) 0;
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      color: var(--white);
+      font-size: var(--fs-h1);
+      margin-bottom: 0.6rem;
+    }
+
+    .cta-band p {
+      color: var(--cloud);
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 2rem;
+      font-family: var(--ff-body);
+      font-size: var(--fs-small);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      text-decoration: none;
+    }
+
+    .btn--primary {
+      background: var(--amber);
+      color: var(--white);
+    }
+
+    .btn--primary:hover {
+      background: var(--amber-dark);
+      color: var(--white);
+      transform: translateY(-1px);
+    }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.4);
+    }
+
+    .btn--outline:hover {
+      border-color: var(--white);
+      color: var(--white);
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ========================================
+       CONTACTS
+       ======================================== */
+    .contacts {
+      background: var(--paper);
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+
+    .contacts__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 4rem);
+    }
+
+    .contact-block { margin-bottom: 1.5rem; }
+
+    .contact-block h3 {
+      font-size: var(--fs-h3);
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-block p,
+    .contact-block a {
+      font-size: var(--fs-small);
+      color: var(--steel);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-block a:hover { color: var(--amber); }
+
+    .map-placeholder {
+      background: var(--frost);
+      border: 1px solid var(--rule);
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cloud);
+      font-size: var(--fs-small);
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer {
+      background: var(--ink);
+      color: var(--cloud);
+      padding: 2.5rem 0 1.5rem;
+      font-size: var(--fs-small);
+    }
+
+    .footer__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 2rem;
+      flex-wrap: wrap;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer__brand .logo__text {
+      color: var(--white);
+      font-size: 1rem;
+    }
+
+    .footer__brand .logo__text span { color: var(--cloud); }
+
+    .footer__nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer__nav a {
+      color: var(--cloud);
+      font-size: var(--fs-small);
+    }
+
+    .footer__nav a:hover { color: var(--white); }
+
+    .footer__copy {
+      font-size: var(--fs-caption);
+      color: var(--steel);
+    }
+
+    /* ========================================
+       PRODUCTS PAGE
+       ======================================== */
+    .products-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--steel) 100%);
+      color: var(--white);
+      padding: clamp(3rem, 7vw, 5rem) 0;
+    }
+
+    .products-hero h1 {
+      color: var(--white);
+      font-size: var(--fs-h1);
+    }
+
+    .products-hero p {
+      color: var(--cloud);
+      margin-top: 0.6rem;
+      font-size: 1.05rem;
+      max-width: 600px;
+    }
+
+    .product-section {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+
+    .product-section:nth-child(even) { background: var(--paper); }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      align-items: center;
+    }
+
+    .product-card--reverse { direction: rtl; }
+    .product-card--reverse > * { direction: ltr; }
+
+    .product-card__image {
+      background: var(--frost);
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cloud);
+      font-size: var(--fs-small);
+      border: 1px solid var(--rule);
+    }
+
+    .product-card__content h2 {
+      font-size: var(--fs-h2);
+      margin-bottom: 1rem;
+    }
+
+    .product-card__content p {
+      color: var(--steel);
+      margin-bottom: 1rem;
+    }
+
+    .product-list {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .product-list li {
+      padding: 0.4rem 0;
+      font-size: var(--fs-small);
+      color: var(--ink);
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+    }
+
+    .product-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--amber);
+      flex-shrink: 0;
+      margin-top: 0.35rem;
+    }
+
+    /* ========================================
+       SECTION HEADER (for pages)
+       ======================================== */
+    .section-header {
+      text-align: center;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+    }
+
+    .section-header .lead { margin: 0.6rem auto 0; }
+
+    /* ========================================
+       ADVANTAGES
+       ======================================== */
+    .advantages {
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+
+    .adv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .adv-item {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .adv-item__icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 1rem;
+      color: var(--amber);
+    }
+
+    .adv-item h4 {
+      font-size: var(--fs-h3);
+      margin-bottom: 0.5rem;
+    }
+
+    .adv-item p {
+      font-size: var(--fs-small);
+      color: var(--steel);
+    }
+
+    /* ========================================
+       PRODUCT CATALOG GRID
+       ======================================== */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .catalog-item {
+      border: 1px solid var(--rule);
+      padding: 1.5rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .catalog-item:hover {
+      border-color: var(--cloud);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+
+    .catalog-item__img {
+      background: var(--frost);
+      aspect-ratio: 16/10;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cloud);
+      font-size: var(--fs-caption);
+    }
+
+    .catalog-item h4 {
+      font-size: var(--fs-body);
+      margin-bottom: 0.4rem;
+    }
+
+    .catalog-item p {
+      font-size: var(--fs-small);
+      color: var(--steel);
+      line-height: 1.5;
+    }
+
+    /* ========================================
+       PRICE TABLE
+       ======================================== */
+    .price-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--fs-small);
+      margin-top: 1.5rem;
+    }
+
+    .price-table thead {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .price-table th {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: var(--fs-caption);
+      letter-spacing: 0.03em;
+    }
+
+    .price-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .price-table tbody tr:hover { background: var(--paper); }
+
+    .price-table .price {
+      font-weight: 600;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    /* ========================================
+       RESPONSIVE
+       ======================================== */
+    @media (max-width: 768px) {
+      .nav { display: none; }
+      .hamburger { display: block; }
+
+      .about__grid,
+      .contacts__grid,
+      .product-card {
+        grid-template-columns: 1fr;
+      }
+
+      .product-card--reverse { direction: ltr; }
+
+      .hero__stats {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .adv-grid { grid-template-columns: 1fr; }
+
+      .footer__inner { flex-direction: column; }
+      .footer__nav { flex-wrap: wrap; gap: 1rem; }
+
+      .directions__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar__inner { justify-content: center; text-align: center; }
+      .header__phone { display: none; }
+    }
+
+    /* ========================================
+       REDUCED MOTION
+       ======================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ========================================
+       PRINT
+       ======================================== */
+    @media print {
+      .topbar, .header, .footer, .cta-band { display: none; }
+      body { color: #000; background: #fff; }
+    }
+
+    /* ========================================
+       UTILITY
+       ======================================== */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+    }
+
+    .text-center { text-align: center; }
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+    .mb-0 { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ==============================
+       TOP BAR
+       ============================== -->
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <span class="topbar__company">Акционерное общество</span>
+      <div class="topbar__right">
+        <a href="tel:+78617216939">+7 (8617) 21-69-39</a>
+        <a href="mailto:noez@noez.ru">noez@noez.ru</a>
+        <div class="lang-switch">
+          <a href="#" class="active" aria-label="Русский">RU</a>
+          <a href="#" aria-label="English">EN</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==============================
+       HEADER
+       ============================== -->
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a href="#" class="logo" aria-label="АО НОЭЗ — На главную">
+        <svg class="logo__mark" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="42" height="42" rx="2" fill="#1B3A5C"/>
+          <path d="M10 32V10h6l8 14V10h6v22h-6l-8-14v14h-6z" fill="#C07A2E"/>
+        </svg>
+        <div class="logo__text">
+          НОЭЗ
+          <span>Новороссийский опытно-экспериментальный завод</span>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#about">О заводе</a>
+        <a href="#directions">Направления</a>
+        <a href="#products">Продукция</a>
+        <a href="#shareholders">Акционерам</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+
+      <a href="tel:+78617216939" class="header__phone">+7 (8617) 21-69-39</a>
+
+      <button class="hamburger" aria-label="Меню" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==============================
+       HERO
+       ============================== -->
+  <section class="hero">
+    <div class="container hero__content">
+      <div class="hero__eyebrow">С 2002 года в Новороссийске</div>
+      <h1>Надёжность, проверенная производством</h1>
+      <p>
+        Полный цикл изготовления строительных материалов и промышленных изделий —
+        от железобетонных конструкций до специальных составов.
+      </p>
+      <a href="#products" class="btn btn--primary">Каталог продукции</a>
+
+      <div class="hero__stats">
+        <div>
+          <div class="stat__number">20+</div>
+          <div class="stat__label">лет на рынке</div>
+        </div>
+        <div>
+          <div class="stat__number">6</div>
+          <div class="stat__label">производственных направлений</div>
+        </div>
+        <div>
+          <div class="stat__number">150+</div>
+          <div class="stat__label">наименований продукции</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="accent-bar"></div>
+
+  <!-- ==============================
+       ABOUT
+       ============================== -->
+  <section class="about" id="about">
+    <div class="container about__grid">
+      <div class="about__text">
+        <span class="eyebrow">О заводе</span>
+        <h2 class="section-title">Новороссийский опытно-экспериментальный завод</h2>
+        <p>
+          АО «НОЭЗ» было создано и зарегистрировано в качестве юридического лица
+          4 сентября 2002 года. Основной вид деятельности — производство строительных
+          материалов, железобетонных и металлических конструкций.
+        </p>
+        <p>
+          Завод располагает современным производственным оборудованием и квалифицированным
+          персоналом, что позволяет обеспечивать полный цикл — от проектирования до отгрузки
+          готовой продукции.
+        </p>
+        <p>
+          География поставок охватывает Краснодарский край, Адыгею, Крым и другие
+          регионы Юга России.
+        </p>
+      </div>
+
+      <div class="about__info">
+        <h3>Реквизиты</h3>
+        <dl>
+          <div class="info-row">
+            <dt>Полное наименование</dt>
+            <dd>АО «НОЭЗ»</dd>
+          </div>
+          <div class="info-row">
+            <dt>ИНН</dt>
+            <dd>2315002291</dd>
+          </div>
+          <div class="info-row">
+            <dt>ОГРН</dt>
+            <dd>1022302381881</dd>
+          </div>
+          <div class="info-row">
+            <dt>Адрес</dt>
+            <dd>353917, г. Новороссийск, ул. Кутузовская, 117</dd>
+          </div>
+          <div class="info-row">
+            <dt>Телефон</dt>
+            <dd>+7 (8617) 21-69-39</dd>
+          </div>
+          <div class="info-row">
+            <dt>E-mail</dt>
+            <dd>noez@noez.ru</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       DIRECTIONS
+       ============================== -->
+  <section class="directions" id="directions">
+    <div class="container">
+      <div class="directions__header">
+        <span class="eyebrow">Производство</span>
+        <h2 class="section-title">Направления деятельности</h2>
+        <p class="lead">
+          Шесть производственных направлений, объединённых единым стандартом качества
+        </p>
+      </div>
+
+      <div class="directions__grid">
+        <div class="dir-card">
+          <svg class="dir-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="6" y="20" width="36" height="22" rx="1"/>
+            <path d="M6 28h36M18 20V6l6 4 6-4v14"/>
+          </svg>
+          <h3>Железобетонные изделия</h3>
+          <p>Фундаментные блоки, плиты перекрытия, лотки, перемычки и другие ЖБИ для строительства.</p>
+        </div>
+
+        <div class="dir-card">
+          <svg class="dir-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 40V16l16-8 16 8v24"/>
+            <path d="M18 40V26h12v14"/>
+            <path d="M8 16l16 8 16-8"/>
+          </svg>
+          <h3>Металлоконструкции</h3>
+          <p>Изготовление и монтаж металлических конструкций различного назначения и сложности.</p>
+        </div>
+
+        <div class="dir-card">
+          <svg class="dir-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="24" cy="24" r="16"/>
+            <circle cx="24" cy="24" r="8"/>
+            <path d="M24 8v8M24 32v8M8 24h8M32 24h8"/>
+          </svg>
+          <h3>Резинотехнические изделия</h3>
+          <p>Промышленные резиновые изделия и комплектующие для различных отраслей.</p>
+        </div>
+
+        <div class="dir-card">
+          <svg class="dir-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="10" y="6" width="28" height="36" rx="2"/>
+            <path d="M18 6v6h12V6"/>
+            <path d="M16 20h16M16 28h16"/>
+          </svg>
+          <h3>Строительные смеси</h3>
+          <p>Сухие строительные смеси, клеевые составы, штукатурки и шпатлёвки.</p>
+        </div>
+
+        <div class="dir-card">
+          <svg class="dir-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 38V14a2 2 0 012-2h20a2 2 0 012 2v24"/>
+            <path d="M8 38h32"/>
+            <path d="M20 12V8M28 12V8"/>
+          </svg>
+          <h3>Утеплители</h3>
+          <p>Пенополистирол, полиуретановая пена и теплоизоляционные материалы.</p>
+        </div>
+
+        <div class="dir-card">
+          <svg class="dir-card__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M24 6L6 18v18l18 6 18-6V18L24 6z"/>
+            <path d="M6 18l18 12 18-12"/>
+            <path d="M24 30v18"/>
+          </svg>
+          <h3>ЛКМ и гидроизоляция</h3>
+          <p>Краски, эмали, битумная гидроизоляция и эпоксидные компаунды.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       PRODUCTS (detailed)
+       ============================== -->
+  <section class="product-section" id="products">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Каталог</span>
+        <h2 class="section-title">Продукция</h2>
+        <p class="lead">Полный ассортимент строительных материалов и промышленных изделий</p>
+      </div>
+
+      <!-- ЖБИ -->
+      <div class="product-card">
+        <div class="product-card__image">Фото ЖБИ</div>
+        <div class="product-card__content">
+          <span class="eyebrow">Железобетонные изделия</span>
+          <h2>Фундаментные блоки ФБС</h2>
+          <p>Фундаментные блоки стеновые из тяжёлого бетона для возведения стен подвальных помещений и ленточных фундаментов.</p>
+          <ul class="product-list">
+            <li>ФБС 24.6.6 — 2400×600×600 мм</li>
+            <li>ФБС 12.4.6 — 1200×400×600 мм</li>
+            <li>ФБС 9.3.6 — 900×300×600 мм</li>
+            <li>Плиты перекрытия ПК</li>
+            <li>Лотки Л, ЛТ</li>
+            <li>Перемычки ПБ, ПР</li>
+          </ul>
+          <a href="products.html" class="btn btn--primary">Подробнее</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="product-section">
+    <div class="container">
+      <div class="product-card product-card--reverse">
+        <div class="product-card__image">Фото строительных смесей</div>
+        <div class="product-card__content">
+          <span class="eyebrow">Строительные смеси</span>
+          <h2>Сухие смеси и составы</h2>
+          <p>Широкий ассортимент сухих строительных смесей для внутренних и наружных работ.</p>
+          <ul class="product-list">
+            <li>Клеевые составы для плитки</li>
+            <li>Штукатурки и шпатлёвки</li>
+            <li>Ремонтные составы для бетона</li>
+            <li>Эпоксидные компаунды</li>
+            <li>Самовыравнивающиеся полы</li>
+            <li>Затирки для швов</li>
+          </ul>
+          <a href="products.html" class="btn btn--primary">Подробнее</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       ADVANTAGES
+       ============================== -->
+  <section class="advantages" style="background: var(--paper);">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Преимущества</span>
+        <h2 class="section-title">Почему выбирают нас</h2>
+      </div>
+      <div class="adv-grid">
+        <div class="adv-item">
+          <svg class="adv-item__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 4l4 8 9 1.3-6.5 6.3L28 29l-8-4.2L12 29l1.5-9.4L7 13.3l9-1.3L20 4z"/>
+          </svg>
+          <h4>Собственное производство</h4>
+          <p>Полный цикл на одном предприятии — от сырья до готовой продукции</p>
+        </div>
+        <div class="adv-item">
+          <svg class="adv-item__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="20" cy="20" r="16"/>
+            <path d="M20 10v10l7 4"/>
+          </svg>
+          <h4>Соблюдение сроков</h4>
+          <p>Стабильные графики поставок и чёткое выполнение обязательств</p>
+        </div>
+        <div class="adv-item">
+          <svg class="adv-item__icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 36V20L8 12"/>
+            <path d="M20 20l12-8"/>
+            <circle cx="20" cy="8" r="4"/>
+          </svg>
+          <h4>Логистика</h4>
+          <p>Доставка по Краснодарскому краю, Адыгее, Крыму и Югу России</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       SHAREHOLDERS
+       ============================== -->
+  <section class="shareholders" id="shareholders">
+    <div class="container container--narrow">
+      <span class="eyebrow">Корпоративное управление</span>
+      <h2 class="section-title">Информация для акционеров</h2>
+      <p class="lead">Документы и отчёты в соответствии с требованиями законодательства</p>
+
+      <ul class="docs-list">
+        <li>
+          <a href="#">
+            <span>Сообщение о внеочередном заседании общего собрания акционеров АО «НОЭЗ»</span>
+            <span class="doc-date">20.07.2026</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Отчёт об итогах голосования на годовом заседании (по итогам 2025 года)</span>
+            <span class="doc-date">10.04.2026</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Сообщение о годовом заседании общего собрания акционеров (по итогам 2025 года)</span>
+            <span class="doc-date">17.03.2026</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Отчёт об итогах голосования на внеочередном заседании от 07.07.2025</span>
+            <span class="doc-date">10.07.2025</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Сообщение о внеочередном заседании общего собрания акционеров</span>
+            <span class="doc-date">12.06.2025</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>Отчёт об итогах голосования на годовом заседании (по итогам 2024 года)</span>
+            <span class="doc-date">23.04.2025</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="mt-3">
+        <a href="#" class="btn btn--primary">Все документы</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       CTA BAND
+       ============================== -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Готовы к сотрудничеству</h2>
+      <p>Свяжитесь с нами для получения консультации и расчёта стоимости</p>
+      <a href="#contacts" class="btn btn--outline">Связаться с нами</a>
+    </div>
+  </section>
+
+  <!-- ==============================
+       CONTACTS
+       ============================== -->
+  <section class="contacts" id="contacts">
+    <div class="container">
+      <span class="eyebrow">Контакты</span>
+      <h2 class="section-title">Свяжитесь с нами</h2>
+
+      <div class="contacts__grid">
+        <div>
+          <div class="contact-block">
+            <h3>Адрес</h3>
+            <p>353917, Краснодарский край,<br>г. Новороссийск, ул. Кутузовская, 117</p>
+          </div>
+          <div class="contact-block">
+            <h3>Телефон</h3>
+            <a href="tel:+78617216939">+7 (8617) 21-69-39</a>
+          </div>
+          <div class="contact-block">
+            <h3>Электронная почта</h3>
+            <a href="mailto:noez@noez.ru">noez@noez.ru</a>
+          </div>
+          <div class="contact-block">
+            <h3>Режим работы</h3>
+            <p>Пн — Пт: 8:00 — 17:00<br>Сб — Вс: выходной</p>
+          </div>
+        </div>
+
+        <div class="map-placeholder">
+          Карта — г. Новороссийск, ул. Кутузовская, 117
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
+       FOOTER
+       ============================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <div class="logo__text">
+            НОЭЗ
+            <span>Новороссийский опытно-экспериментальный завод</span>
+          </div>
+          <p style="margin-top: 0.5rem; font-size: var(--fs-caption);">
+            ИНН 2315002291 · ОГРН 1022302381881
+          </p>
+        </div>
+
+        <div class="footer__nav">
+          <a href="#about">О заводе</a>
+          <a href="#directions">Направления</a>
+          <a href="#products">Продукция</a>
+          <a href="#shareholders">Акционерам</a>
+          <a href="#contacts">Контакты</a>
+        </div>
+      </div>
+
+      <div class="footer__copy">
+        &copy; 2002 — 2026 АО «НОЭЗ». Все права защищены.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

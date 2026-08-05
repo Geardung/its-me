@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jojo — Кальян-бар в Казани</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #1A1A2E;
+      --paper: #F5F0EB;
+      --gold: #D4A574;
+      --smoke: #8B8B9E;
+      --ember: #C4724E;
+      --dark-smoke: #2D2D44;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Avenir Next', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--ink);
+      color: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 3rem;
+      background: linear-gradient(180deg, rgba(26,26,46,0.95) 0%, rgba(26,26,46,0) 100%);
+      transition: background 0.4s ease;
+    }
+    nav.scrolled { background: rgba(26,26,46,0.97); backdrop-filter: blur(12px); }
+    .nav-logo {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.5rem; color: var(--gold); text-decoration: none; letter-spacing: 0.08em;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      color: var(--paper); text-decoration: none; font-size: 0.85rem;
+      letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7;
+      transition: opacity 0.3s, color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a:focus-visible { opacity: 1; color: var(--gold); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; padding: 2rem; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url('https://avatars.mds.yandex.net/get-maps-adv-crm/13303822/2a00000192dd638309daab45f6968e324a1e/landing_background') center/cover no-repeat;
+      z-index: 0;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(26,26,46,0.7) 0%, rgba(26,26,46,0.5) 50%, rgba(26,26,46,0.9) 100%);
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--smoke); margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(4rem, 12vw, 10rem); font-weight: 400; color: var(--paper);
+      letter-spacing: 0.04em; line-height: 0.9; margin-bottom: 1.5rem;
+    }
+    .hero-subtitle {
+      font-size: 1.1rem; color: var(--smoke); max-width: 480px;
+      margin: 0 auto 3rem; font-weight: 300; line-height: 1.7;
+    }
+    .hero-cta {
+      display: inline-block; padding: 0.9rem 2.5rem;
+      border: 1px solid var(--gold); color: var(--gold); text-decoration: none;
+      font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+    }
+    .hero-cta:hover, .hero-cta:focus-visible { background: var(--gold); color: var(--ink); }
+    .hero-scroll {
+      position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--smoke); font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; opacity: 0.5; z-index: 2;
+      animation: float 3s ease-in-out infinite;
+    }
+    .hero-scroll::after {
+      content: ''; width: 1px; height: 40px;
+      background: linear-gradient(180deg, var(--smoke), transparent);
+    }
+    @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+    @media (prefers-reduced-motion: reduce) { .hero-scroll { animation: none; } }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 6rem 3rem; }
+    .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .section-title { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin-bottom: 1.5rem; color: var(--paper); }
+    .section-text { color: var(--smoke); max-width: 600px; line-height: 1.8; }
+
+    /* ─── ABOUT ─── */
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 1200px; margin: 0 auto; }
+    .about-visual {
+      position: relative; aspect-ratio: 3/4;
+      background: url('https://avatars.mds.yandex.net/get-altay/10993309/2a0000018cdaad2771a2c5f017d4b9f18a22/L') center/cover no-repeat;
+      border: 1px solid rgba(212,165,116,0.1); overflow: hidden;
+    }
+    .about-visual::after { content:''; position:absolute; inset:0; background: linear-gradient(135deg, rgba(26,26,46,0.3) 0%, transparent 50%); }
+    .about-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(212,165,116,0.15); }
+    .stat-number { font-family: Georgia, 'Times New Roman', serif; font-size: 2.5rem; color: var(--gold); line-height: 1; margin-bottom: 0.3rem; }
+    .stat-label { font-size: 0.75rem; color: var(--smoke); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ─── MENU ─── */
+    .menu { max-width: 1200px; margin: 0 auto; }
+    .menu-header { text-align: center; margin-bottom: 4rem; }
+    .menu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(212,165,116,0.08); }
+    .menu-category { background: var(--ink); padding: 2rem; }
+    .menu-category:last-child { grid-column: 1 / -1; }
+    .menu-category-name { font-family: Georgia, 'Times New Roman', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 1.5rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(212,165,116,0.15); }
+    .menu-item { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 1.5rem; padding: 0.65rem 0; align-items: baseline; }
+    .menu-item:not(:last-child) { border-bottom: 1px solid rgba(139,139,158,0.08); }
+    .menu-item-name { font-size: 0.88rem; color: var(--paper); line-height: 1.4; }
+    .menu-item-price { font-family: 'SF Mono','Cascadia Code',Consolas,monospace; font-size: 0.85rem; color: var(--gold); white-space: nowrap; text-align: right; }
+
+    /* ─── FEATURES ─── */
+    .features { max-width: 1200px; margin: 0 auto; }
+    .features-header { text-align: center; margin-bottom: 4rem; }
+    .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .feature {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(212,165,116,0.08);
+      align-items: start;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .feature:hover { border-color: rgba(212,165,116,0.2); background: rgba(212,165,116,0.02); }
+    .feature-num {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      opacity: 0.3;
+      line-height: 1;
+      user-select: none;
+    }
+    .feature-body { padding-top: 0.2rem; }
+    .feature-name {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.15rem;
+      color: var(--paper);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.02em;
+    }
+    .feature-desc { font-size: 0.85rem; color: var(--smoke); line-height: 1.6; }
+
+    /* ─── GALLERY ─── */
+    .gallery { max-width: 1200px; margin: 0 auto; }
+    .gallery-header { text-align: center; margin-bottom: 4rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(3,1fr); grid-auto-rows: 280px; gap: 1rem; }
+    .gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.5s; }
+    .gallery-item:hover img { transform: scale(1.05); filter: brightness(1.1); }
+    .gallery-item::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, transparent 60%, rgba(26,26,46,0.6) 100%); opacity:0; transition: opacity 0.3s; }
+    .gallery-item:hover::after { opacity: 1; }
+    .gallery-item:first-child { grid-column: span 2; grid-row: span 2; }
+
+    /* ─── REVIEWS 3D CAROUSEL ─── */
+    .reviews { max-width: 1200px; margin: 0 auto; }
+    .reviews-header { text-align: center; margin-bottom: 3rem; }
+    .carousel-scene {
+      perspective: 1200px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-ring {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .carousel-card {
+      position: absolute;
+      width: 520px;
+      left: 50%;
+      top: 50%;
+      margin-left: -260px;
+      margin-top: -140px;
+      background: var(--dark-smoke);
+      padding: 2rem 2.5rem;
+      border-left: 2px solid var(--gold);
+      backface-visibility: hidden;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .carousel-card.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .review-text { font-size: 0.95rem; color: var(--paper); line-height: 1.8; margin-bottom: 1.2rem; font-style: italic; }
+    .review-footer { display: flex; justify-content: space-between; align-items: center; }
+    .review-author { font-size: 0.85rem; color: var(--smoke); }
+    .review-rating { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.1em; }
+    .review-source { font-size: 0.7rem; color: var(--smoke); opacity: 0.6; margin-top: 0.2rem; }
+    .carousel-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
+    .carousel-btn {
+      background: none; border: 1px solid rgba(212,165,116,0.3); color: var(--gold);
+      width: 44px; height: 44px; cursor: pointer; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .carousel-btn:hover { border-color: var(--gold); background: rgba(212,165,116,0.1); }
+    .carousel-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 1.5rem; }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%; border: 1px solid rgba(212,165,116,0.4);
+      background: transparent; cursor: pointer; transition: all 0.3s;
+    }
+    .carousel-dot.active { background: var(--gold); border-color: var(--gold); width: 18px; border-radius: 3px; }
+    .reviews-disclaimer { text-align: center; margin-top: 2.5rem; font-size: 0.75rem; color: var(--smoke); opacity: 0.6; }
+    .reviews-disclaimer a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(212,165,116,0.3); }
+    .reviews-disclaimer a:hover { border-color: var(--gold); }
+    @media (max-width: 700px) {
+      .carousel-scene { height: 360px; }
+      .carousel-card { width: calc(100vw - 3rem); margin-left: calc(-50vw + 1.5rem); padding: 1.5rem; }
+    }
+
+    /* ─── CONTACT ─── */
+    .contact { max-width: 1200px; margin: 0 auto; }
+    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: stretch; }
+    .contact-info-item { margin-bottom: 2rem; }
+    .contact-label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .contact-value { font-size: 1rem; color: var(--paper); }
+    .contact-value a { color: var(--paper); text-decoration: none; border-bottom: 1px solid rgba(212,165,116,0.3); transition: border-color 0.3s; }
+    .contact-value a:hover, .contact-value a:focus-visible { border-color: var(--gold); color: var(--gold); }
+    .contact-map { border: 1px solid rgba(212,165,116,0.1); overflow: hidden; height: 100%; }
+    .contact-map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.3) contrast(1.1); display: block; }
+
+    /* ─── FOOTER ─── */
+    footer { border-top: 1px solid rgba(212,165,116,0.1); padding: 3rem; text-align: center; }
+    .footer-logo { font-family: Georgia, 'Times New Roman', serif; font-size: 1.2rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 1rem; }
+    .footer-copy { font-size: 0.75rem; color: var(--smoke); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .about { grid-template-columns: 1fr; gap: 2rem; }
+      .about-visual { display: none; }
+      .about-stats { grid-template-columns: repeat(3,1fr); gap: 1rem; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-category:last-child { grid-column: span 1; }
+      .features-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); grid-auto-rows: 200px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 3.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+      .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
+      .about-stats { grid-template-columns: 1fr; gap: 1.5rem; }
+      .menu-item { grid-template-columns: 1fr; gap: 0.25rem; }
+      .menu-item-price { text-align: left; font-size: 0.8rem; }
+      .carousel-slide { padding: 0 0.5rem; }
+      .review-card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Jojo</a>
+    <ul class="nav-links">
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#menu">Меню</a></li>
+      <li><a href="#features">Особенности</a></li>
+      <li><a href="#gallery">Галерея</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+      <li><a href="#contact">Контакты</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Кальян-бар &middot; Кафе &middot; Казань</p>
+      <h1 class="hero-title">Jojo</h1>
+      <p class="hero-subtitle">Приглушённый свет, уютные диваны и спокойная музыка. Место, где можно отключиться и наслаждаться моментом.</p>
+      <a href="#menu" class="hero-cta">Посмотреть меню</a>
+    </div>
+    <div class="hero-scroll">Листай вниз</div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="about">
+      <div class="about-visual"></div>
+      <div class="about-text">
+        <p class="section-eyebrow">О заведении</p>
+        <h2 class="section-title">Стильное место для отдыха</h2>
+        <p class="section-text">Jojo — это кальян-бар и кафе на 4 этаже в Ново-Савиновском районе Казани. Уютные диваны и кресла, приглушённый свет и спокойная музыка создают атмосферу, в которой хочется задержаться.</p>
+        <div class="about-stats">
+          <div><div class="stat-number">5.0</div><div class="stat-label">Рейтинг</div></div>
+          <div><div class="stat-number">1200+</div><div class="stat-label">Оценок</div></div>
+          <div><div class="stat-number">747</div><div class="stat-label">Отзывов</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" style="background:var(--dark-smoke)">
+    <div class="menu">
+      <div class="menu-header"><p class="section-eyebrow">Меню</p><h2 class="section-title">Что мы предлагаем</h2></div>
+      <div class="menu-grid">
+        <div class="menu-category">
+          <h3 class="menu-category-name">Стартеры</h3>
+          <div class="menu-item"><span class="menu-item-name">Тар тар из говядины с трюфельным айоли</span><span class="menu-item-price">790 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Тар тар из лосося с соусом понзу</span><span class="menu-item-price">790 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Тар тар из тунца с дрессингом манго-юдзу</span><span class="menu-item-price">740 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Креветки темпура</span><span class="menu-item-price">610 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Хрустящий баклажан</span><span class="menu-item-price">540 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Попкорн из креветок</span><span class="menu-item-price">610 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Брускетта с креветкой и вялеными томатами</span><span class="menu-item-price">610 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Брускетта черри-ростбиф</span><span class="menu-item-price">610 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Брускетта с тунцом</span><span class="menu-item-price">610 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Вителло тоннато</span><span class="menu-item-price">640 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Сырное плато</span><span class="menu-item-price">1 140 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Мясное плато</span><span class="menu-item-price">1 240 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Горячие блюда</h3>
+          <div class="menu-item"><span class="menu-item-name">Бифштекс из мраморной говядины под трюфельной заправкой</span><span class="menu-item-price">780 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Стейк лосося с муссом из авокадо</span><span class="menu-item-price">1 140 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Бефстроганов</span><span class="menu-item-price">760 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Курица Карри</span><span class="menu-item-price">580 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Рваная говядина с соусом дзадзики</span><span class="menu-item-price">940 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Говяжьи щёчки с птитимом</span><span class="menu-item-price">890 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Бифштекс с сыром чеддер и клюквенным соусом</span><span class="menu-item-price">940 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Медальон с картофельным крокетом</span><span class="menu-item-price">1 140 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Куриная грудка с картофельным драником</span><span class="menu-item-price">680 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Черная треска с эдамаме</span><span class="menu-item-price">1 040 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Салаты</h3>
+          <div class="menu-item"><span class="menu-item-name">Греческий с фермерской брынзой</span><span class="menu-item-price">560 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Цезарь с курицей</span><span class="menu-item-price">560 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Цезарь с креветками</span><span class="menu-item-price">690 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Салат с креветками, авокадо и соусом манго-чили</span><span class="menu-item-price">760 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Нисуаз</span><span class="menu-item-price">860 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Салат с лососем</span><span class="menu-item-price">790 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Салат овощной с куриным филе</span><span class="menu-item-price">250 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Салат с ростбифом и хрустящими баклажанами</span><span class="menu-item-price">680 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Салат с индейкой</span><span class="menu-item-price">640 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Паста</h3>
+          <div class="menu-item"><span class="menu-item-name">Орзо с морепродуктами</span><span class="menu-item-price">640 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Орзо с лососем и соусом песто</span><span class="menu-item-price">810 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Фетучини с креветками</span><span class="menu-item-price">640 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Фетучини с тартаром из тунца</span><span class="menu-item-price">710 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Фетучини с ростбифом и трюфельным соусом</span><span class="menu-item-price">640 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Фетучини с курицей и грибами</span><span class="menu-item-price">510 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Орзо с грибами</span><span class="menu-item-price">540 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Пицца</h3>
+          <div class="menu-item"><span class="menu-item-name">Маргарита</span><span class="menu-item-price">580 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Мясная</span><span class="menu-item-price">640 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Пепперони</span><span class="menu-item-price">640 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Четыре сыра</span><span class="menu-item-price">760 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Чикен Карри</span><span class="menu-item-price">640 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Креветка Том-ям</span><span class="menu-item-price">890 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Индейка страчателла</span><span class="menu-item-price">890 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Десерты</h3>
+          <div class="menu-item"><span class="menu-item-name">Малина пармезан</span><span class="menu-item-price">510 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Медовик</span><span class="menu-item-price">510 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Наполеон Авторский</span><span class="menu-item-price">510 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Панна Котта с лемонграссом и соусом из маракуйи</span><span class="menu-item-price">490 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Сан-Себастьян Дубайский шоколад</span><span class="menu-item-price">530 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Сметанник Авторский</span><span class="menu-item-price">510 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Супы</h3>
+          <div class="menu-item"><span class="menu-item-name">Том-ям с морепродуктами</span><span class="menu-item-price">790 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Борщ с томленой говядиной</span><span class="menu-item-price">580 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Домашняя лапша с куриным бульоном</span><span class="menu-item-price">440 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Сливочная уха</span><span class="menu-item-price">590 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Крем-суп грибной</span><span class="menu-item-price">480 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Тыквенный крем-суп с креветками и страчателлой</span><span class="menu-item-price">540 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Бургеры</h3>
+          <div class="menu-item"><span class="menu-item-name">Джокович</span><span class="menu-item-price">680 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">С ума сойти</span><span class="menu-item-price">840 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Шахтер</span><span class="menu-item-price">740 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Чизбургер</span><span class="menu-item-price">630 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Биф Карри</span><span class="menu-item-price">790 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Гарниры</h3>
+          <div class="menu-item"><span class="menu-item-name">Рис басмати с овощами</span><span class="menu-item-price">210 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Картофельное пюре</span><span class="menu-item-price">210 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Картофель фри с пармезаном и соусом чии майо</span><span class="menu-item-price">260 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Картофель по-деревенски</span><span class="menu-item-price">230 ₽</span></div>
+        </div>
+        <div class="menu-category">
+          <h3 class="menu-category-name">Вок</h3>
+          <div class="menu-item"><span class="menu-item-name">Вок с курицей</span><span class="menu-item-price">460 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Вок с креветкой</span><span class="menu-item-price">560 ₽</span></div>
+          <div class="menu-item"><span class="menu-item-name">Вок с говядиной</span><span class="menu-item-price">560 ₽</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="features">
+      <div class="features-header"><p class="section-eyebrow">Особенности</p><h2 class="section-title">Что делает Jojo особенным</h2></div>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-num">01</div>
+          <div class="feature-body">
+            <div class="feature-name">Приглушённый свет</div>
+            <div class="feature-desc">Мягкое освещение, уютные диваны и атмосфера, в которой хочется задержаться. Идеально для вечера с друзьями или романтического ужина.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-num">02</div>
+          <div class="feature-body">
+            <div class="feature-name">Авторский кальян</div>
+            <div class="feature-desc">Опытные мастера подберут сочетание под ваш вкус. Густой дым, насыщенный аромат и внимание к каждому пожеланию.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-num">03</div>
+          <div class="feature-body">
+            <div class="feature-name">Летняя терраса</div>
+            <div class="feature-desc">Открытая веранда на крыше с видом на город. Летним вечером здесь особая атмосфера — закат, лёгкий ветерок и спокойная музыка.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-num">04</div>
+          <div class="feature-body">
+            <div class="feature-name">Chillout-музыка</div>
+            <div class="feature-desc">Спокойный саундтрек для расслабления. Ни громкой музыки, ни криков — только тихий лаунж, в котором легко быть собой.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" style="background:var(--dark-smoke)">
+    <div class="gallery">
+      <div class="gallery-header"><p class="section-eyebrow">Галерея</p><h2 class="section-title">Атмосфера Jojo</h2></div>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="https://avatars.mds.yandex.net/get-altay/15285331/2a00000196e953293afac4d4d46bce783e23/XXXL" alt="Интерьер Jojo" loading="lazy"></div>
+        <div class="gallery-item"><img src="https://avatars.mds.yandex.net/get-altay/9770129/2a000001895f091d48b9c3545393e83d4955/XXXL" alt="Атмосфера Jojo" loading="lazy"></div>
+        <div class="gallery-item"><img src="https://avatars.mds.yandex.net/get-altay/11444509/2a0000018ece98adc7476be4f38d5312ac06/XXXL" alt="Блюда Jojo" loading="lazy"></div>
+        <div class="gallery-item"><img src="https://avatars.mds.yandex.net/get-altay/13207207/2a00000190f3d77c9b7a013144e7f76ec592/XXXL" alt="Кальян в Jojo" loading="lazy"></div>
+        <div class="gallery-item"><img src="https://avatars.mds.yandex.net/get-altay/16569030/2a0000019870ea890330ce73c3b8846b2fac/XXXL" alt="Терраса Jojo" loading="lazy"></div>
+        <div class="gallery-item"><img src="https://avatars.mds.yandex.net/get-altay/16497373/2a00000198e6fce6e35874374a7793c4138b/XXXL" alt="Зал Jojo" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews">
+    <div class="reviews">
+      <div class="reviews-header"><p class="section-eyebrow">Отзывы</p><h2 class="section-title">Что говорят гости</h2></div>
+      <div class="carousel-scene">
+        <div class="carousel-ring" id="carouselRing"></div>
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-btn" id="prevBtn" aria-label="Предыдущий отзыв">&#8592;</button>
+        <button class="carousel-btn" id="nextBtn" aria-label="Следующий отзыв">&#8594;</button>
+      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <p class="reviews-disclaimer">Проверенные отзывы, взятые из <a href="https://yandex.ru/maps/org/jojo/20078198778/" target="_blank" rel="noopener">Яндекс Карт</a> и <a href="https://2gis.ru/kazan/firm/70000001076767257" target="_blank" rel="noopener">2GIS</a></p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" style="background:var(--dark-smoke)">
+    <div class="contact">
+      <div class="contact-inner">
+        <div>
+          <p class="section-eyebrow">Контакты</p>
+          <h2 class="section-title">Как нас найти</h2>
+          <div class="contact-info-item"><div class="contact-label">Адрес</div><div class="contact-value">Чистопольская ул., 19Г, Казань<br>4 этаж, Ново-Савиновский район</div></div>
+          <div class="contact-info-item"><div class="contact-label">Телефон</div><div class="contact-value"><a href="tel:+79274955535">+7 (927) 495-55-35</a></div></div>
+          <div class="contact-info-item"><div class="contact-label">Email</div><div class="contact-value"><a href="mailto:jojokzn@yandex.ru">jojokzn@yandex.ru</a></div></div>
+          <div class="contact-info-item"><div class="contact-label">Время работы</div><div class="contact-value">Ежедневно до 00:00</div></div>
+          <div class="contact-info-item"><div class="contact-label">Мессенджеры</div><div class="contact-value">WhatsApp &middot; Telegram &middot; VK</div></div>
+        </div>
+        <div class="contact-map">
+          <iframe src="https://yandex.ru/map-widget/v1/?ll=49.106405%2C55.796127&z=17&pt=49.106405%2C55.796127%2Cpm2rdm&text=Казань%2C%20Чистопольская%20ул.%2C%2019%D0%93" allowfullscreen loading="lazy" title="Карта — Jojo, Чистопольская ул., 19Г"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Jojo</div>
+    <p class="footer-copy">&copy; 2026 Jojo — Кальян-бар в Казани. Чистопольская ул., 19Г.</p>
+  </footer>
+
+  <script>
+    // Navbar
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Reviews data
+    const reviews = [
+      {n:"Евгения Ларионова",t:"Вкусный медовик, отличная атмосфера, обслуживание невероятное. Официантка была крайне вежлива и приятна. Кальян был обычный, но не плохой. Эльза превратила оценку в 5.",s:"yandex"},
+      {n:"Мария О.",t:"Брали смузи — 10 из 10, молочный коктейль с чак-чаком — классная идея, вкусно, пицца со страчателлой — 10 из 10. Средний чек 1-1,5 тысячи. Рекомендую, красивый вид.",s:"yandex"},
+      {n:"Ясмина Исламова",t:"Моё любимое место в Казани. Чаще всего прихожу на обед — за час успеваю поесть и покурить кальян. Хорошая кухня, внимательный и вежливый персонал. Терраса — отдельная любовь.",s:"yandex"},
+      {n:"Liss SS",t:"Несколько раз с девочками посещали это место, были и внутри и на террасе. В целом всё хорошо. Еда вкусная, несут быстро, кальян тоже ничего. Если будет прохладно — выдают пледы.",s:"yandex"},
+      {n:"Смм И.",t:"Очень понравилось это место! Кальяны отличные, персонал очень вежливый и приятный, обслуживание быстрое. Отдельно хочется отметить кухню — все было очень вкусно, а порции реально большие.",s:"yandex"},
+      {n:"Анна Веселова",t:"С уверенностью могу сказать, что это одно из лучших заведений в Казани. Всегда классный кальян. Из меню любимые позиции: бургер «С ума сойти», томленая говядина в соусе дзадзики, стейк лосося.",s:"yandex"},
+      {n:"Виктория",t:"Недавно посетили этот ресторан и остались в полном восторге! Атмосфера очень уютная, интерьер стильный. Персонал внимательный, вежливый. Еда заслуживает отдельных похвал — всё свежее и вкусно.",s:"yandex"},
+      {n:"Эльвина Ш.",t:"Недавно посетили это заведение и остались в восторге. Кальян — дымный, долго держался. Заказывали роллы, пасту, коктейли. Очень интересная подача и очень вкусно!",s:"yandex"},
+      {n:"Илья Бродников",t:"5 звёзд за интерьер, блюда соответствуют прайсу. Кстати, некурящим не рекомендую, очень большое содержание дыма кальяна на кубометр воздуха.",s:"yandex"},
+      {n:"Анастасия Батина",t:"Лаунж полностью оправдывает свой высокий рейтинг. Отличное обслуживание, люди знают свою работу! Кухня быстро готовит. Всё вкусно! Ненавязчивая музыка, современный интерьер.",s:"yandex"},
+      {n:"Нияз Гайфуллин",t:"Коктейли вкусные, кухня средняя. Но всё переделали без претензий и скандалов — кальян и мясо переприготовили. За это очевидно лайк.",s:"yandex"},
+      {n:"Ксения",t:"Хорошее место, где можно провести время в компании друзей! Спокойная фоновая музыка, большое меню, быстрое обслуживание. Рваная говядина и салат с тунцом — ОЧЕНЬ вкусно!",s:"yandex"},
+      {n:"Эльвина Насибова",t:"Праздновали день рождения. Нам всё очень понравилось — стильный интерьер, превосходная кухня, красивые и оригинальные коктейли. Большая благодарность официанту Артёму.",s:"yandex"},
+      {n:"Ира Бурашникова",t:"Очень атмосферное место, я приехала из Уфы и мне так понравилось! Сотрудники вежливые, компетентные и красивые. Блюда все горячие и ооочень вкусные.",s:"yandex"},
+      {n:"Адиля С.",t:"Посетили это заведение впервые и остались в полном восторге! Кухня хорошая, всё вкусно и цены не кусаются. Официант Кирилл — очень внимательный и обходительный.",s:"yandex"},
+      {n:"Вика Матвеева",t:"Недавно посетила Jojo и осталась в полном восторге! Атмосфера очень уютная. Обслуживание на высоте — Кирилл очень приятный официант!",s:"yandex"},
+      {n:"Владислав Нестеров",t:"Посетил Jojo — остался в полном восторге! Бургер, пицца и цезарь с курицей оказались невероятно вкусными. Обслуживание на высшем уровне — спасибо официанту Эльзе.",s:"yandex"},
+      {n:"Алия Галиева",t:"Очень понравилась терраса наверху! Супер клиентоориентированность, вкусные блюда и напитки, отличный кальян. Сотрудники очень милые и вежливые.",s:"yandex"},
+      {n:"Лейсан",t:"Всегда с удовольствием приходим в это заведение. Уютная атмосфера, стильный интерьер и чистота. Кухня супервкусная! Спасибо официанту Айрату за профессиональный подход.",s:"yandex"},
+      {n:"Дамир Фаридонов",t:"Очень приятное лаунж-кафе с уютной и спокойной атмосферой. Музыка не мешает общению. Еда и напитки понравились. Официант Айрат — вежливый и внимательный.",s:"yandex"},
+      {n:"Дарья",t:"Классное и современное место для отдыха. Блюда порадовали, всё было вкусно и сытно. Авторские коктейли очень вкусные, кальян забили как надо.",s:"yandex"},
+      {n:"Ростислав Сайфиев",t:"Были компанией из 9 человек. Вид прекрасный, обслуживание великолепное. Еда просто великолепие — сливочная уха, картофель фри и пицца. Лимонад был вкусным.",s:"yandex"},
+      {n:"Азалия",t:"Праздновали день рождения, всё просто супер — еда, напитки, атмосфера. Персонал очень дружелюбный, поздравили с праздником. Официант Артём помог с выбором.",s:"yandex"},
+      {n:"Полина",t:"Роллы супер! Коктейли неплохие, обслуживание официанты очень понравилось. Вкусная кухня, классная атмосфера. Мало мест, где бы так заботились о клиентах.",s:"yandex"},
+      {n:"Альбина Н",t:"Хорошая летняя тераса! Кухня понравилась — роллы, том ям. Официанты знатоки своего меню, всё подсказали грамотно. Кальян тоже оценили по качеству.",s:"yandex"},
+      {n:"Ирина Энеева",t:"Вкусная кухня, классная атмосфера. Мало мест, где бы так заботились о клиентах. Очень приятный официант Кирилл, рассказал про акции и предложил вкусные коктейли!",s:"yandex"},
+      {n:"Алия Б.",t:"Jojo — просто спасение для души. С первого шага чувствуешь атмосферу полного спокойствия: мягкий свет, уютные диваны, приятная музыка. Персонал — внимательный и искренне доброжелательный.",s:"yandex"},
+      {n:"Рената Ялилова",t:"Самое любимое заведение, ходим сюда постоянно. Официанты очень хорошие, сервис просто супер. Кальянные мастера тоже классные. Кухня очень вкусная!",s:"yandex"},
+      {n:"Ель Колючая",t:"Заведение хорошее, еда тоже неплохая. Единственный минус — кальяны курят не только на террасе, но и в самом помещении. Не очень приятно для некурящих.",s:"yandex"},
+      {n:"Альфия Б.",t:"Мы остались очень довольны посещением ресторана Jojo. Официант был вежливым и клиентоориентированным. Курица с картофельными драниками — отличное сочетание вкусов.",s:"yandex"},
+      {n:"Марина Серова",t:"Отличное место для отдыха после напряжённого дня! Атмосфера очень уютная. Обслуживание на высшем уровне. Особенно понравились говяжьи щёчки.",s:"yandex"},
+      {n:"Муллагалиева Раяна",t:"Отличное заведение для тех, кто любит посиделки на свежем воздухе, вкусный кальян и разнообразную кухню. Цена/качество — 10/10.",s:"yandex"},
+      {n:"Мария",t:"Очень атмосферное заведение, хочется отметить официанта Айрата! Давно не встречали такого обслуживания, очень улыбчивый, во всём поможет.",s:"yandex"},
+      {n:"Резниченко А.В.",t:"Находится на 4 этаже, современно, чисто, хорошая посадка. Персонал вежливый, обученный. В целом норм на 4, не пять потому что цены на напитки кусаются.",s:"yandex"},
+      {n:"Эвелина Шафикова",t:"В этом ресторане был отличный вечер! Интерьер очень уютный и стильный. Официант Эльвина очень приятная и дружелюбная. Меню разнообразное, блюда поданы красиво.",s:"yandex"},
+      {n:"Екатерина Митрофанова",t:"Отличное место, очень вкусная еда, большие порции, особый плюс — персонал. Дважды отмечали здесь день рождения подруги и весь персонал были «за» любую идею.",s:"yandex"},
+      {n:"Scavenger",t:"Отличное место с уютным, стильным интерьером. Меню порадовало разнообразием и вкусом блюд, особенно роллы — свежие, красиво поданные. Официант Айрат — вежливый и профессиональный.",s:"yandex"},
+      {n:"Риана Габидуллина",t:"Очень приятное заведение. Ходим почти каждую неделю. Что бы не брали, всё вкусно, особенно люблю сметанник. Все официанты очень внимательные.",s:"yandex"},
+      {n:"Никита Торгашов",t:"Восхитительное место! Потрясающий гастрономический опыт. Бар покорил креативными коктейлями. Уютная атмосфера и внимательный сервис. Однозначно рекомендую!",s:"yandex"},
+      {n:"Айдар Хайруллин",t:"Замечательное заведение с приемлемыми ценами, всё очень вкусно и обслуживание на уровне. Отметим кальян и кальянщиков — вежливое отношение. Атмосфера уюта, комфорта и стиля.",s:"yandex"},
+      {n:"Анна Мамченко",t:"Интересный интерьер. Обслуживание на уровне, приятное в общении руководство. Советую попробовать бургеры — как классические, так и с необычными сочетаниями.",s:"yandex"},
+      {n:"Камила Лёгенькая",t:"Недавно посетил это заведение и остался очень доволен! Атмосфера уютная, приглушённый свет, спокойная музыка. Кальян приготовили быстро, вкус насыщенным.",s:"yandex"},
+      {n:"Полина Кириллова",t:"Это место оставило исключительно приятные впечатления. Интерьер уютный и стильный. Обслуживание на высшем уровне. Еда свежая и вкусная, меню разнообразное.",s:"yandex"},
+      {n:"Алсу Гатауллина",t:"Очень милое и уютное пространство! Разнообразное меню под любой вкус и кошелёк. Очень милые официанты. Приходим уже не в первый раз!",s:"yandex"},
+      {n:"Раниля Закирова",t:"Прекрасное и уютное место. Можно насладиться вкусной кухней, приятной атмосферой и отличным обслуживанием. Интерьер заведения стильный и приятный.",s:"yandex"},
+      {n:"ФанАртик",t:"Отличное заведение. Красивый дизайн, вид и очень хорошее обслуживание. Эльзе и Адаму отдельная благодарность. Посоветовали вкусные блюда, приготовили вкусный кальян.",s:"yandex"},
+      {n:"Яна Красильникова",t:"Стильное заведение, большой выбор блюд и напитков. Всё очень вкусно и красиво. Еду приносят в соответствии с пожеланиями. Обязательно придём ещё!",s:"yandex"},
+      {n:"Диана Альмяшева",t:"Вкусно, сытно, атмосферно. Официанту Артёму большое спасибо: сориентировал с выбором по меню и был очень вежлив. Вернёмся ещё!",s:"yandex"},
+      {n:"Снежана Сергеева",t:"Отмечали день рождение подруги. Блюда, напитки, обслуживание официанта Артёма — всё на высшем уровне. Всё попало прям в точку.",s:"yandex"},
+      {n:"Ильзира Шарипова",t:"Персонал заведения приятный и отзывчивый. Официанты быстро реагировали на заказы, всегда были на связи и улыбались. Интерьер уютный и стильный. Рекомендую!",s:"yandex"},
+      {n:"Дмитрий Соболев",t:"Очень понравилась концепция заведения, сидели в зале, очень чисто и классный интерьер! Обслуживание на высоте, кухня очень вкусная и подача быстрая!",s:"2gis"},
+      {n:"Гульназ Валиева",t:"Шикарная веранда, вкуснейшая паста с креветками и качественный кальян! Спасибо вам.",s:"2gis"},
+      {n:"Камила",t:"Недавно посетила это заведение и осталась очень довольна! Атмосфера уютная. Кальян приготовили быстро, вкус получился насыщенным, дым густой.",s:"2gis"},
+      {n:"Елена Сергеева",t:"Вкусные блюда, все приносят быстро, вежливые официанты. Необычный, стильный интерьер, красивая терраса.",s:"2gis"},
+      {n:"Елизавета Смирнова",t:"Отличное атмосферное место, вкусно, кальян хороший.",s:"2gis"},
+      {n:"Александра Окунева",t:"Еда, напитки и кальяны супер, обслуживание тоже на высоте. Есть удобная бонусная система. Сидели на балконе, в следующий раз придём, когда терраса будет открыта.",s:"2gis"},
+      {n:"Оля Качмашева",t:"Шумновато в зале, но в целом неплохо, чтобы перекусить. Понравились кальянные сеты.",s:"2gis"},
+      {n:"Den Makitov",t:"Зачастил сюда, хотя кальян не курю. Хорошая вентиляция, дыма не много. Сервис хороший, друзья кальян хвалят. Хорошее место встретиться.",s:"2gis"},
+      {n:"Анастасия Добрынина",t:"Повара отличные, официанты тоже, кальянщики работают на высоте. Единственный минус — вытяжка не совсем справляется с дымом.",s:"2gis"},
+      {n:"ILYA M",t:"Красивая летняя терраса под открытым небом на крыше, уютно посидеть летним вечером. Вкусные блюда.",s:"2gis"},
+      {n:"Дима Смит",t:"Цены не дорогие, но из двух кальянов ни один не попал во вкус, хотя мастер старался.",s:"2gis"},
+      {n:"Ира К.",t:"Мы влюбились в это место! Являемся уже год постоянными клиентами. Летняя веранда просто загляденье. Отдельное спасибо сервису — официантки невероятно доброжелательные.",s:"2gis"},
+      {n:"Альбина Иванова",t:"Заведение посещаем не в первый раз, очень клиентоориентированный персонал. Особенно хочу отметить кальянщика Адама — очень вежливый и профессиональный!",s:"2gis"},
+      {n:"Olga Egorova",t:"Вкусно, хороший сервис, доступное и понятное по вкусу меню. Роллы — не зря их хвалят. Порция большая, достаточно для полноценного ужина.",s:"2gis"},
+      {n:"Самат Махмутов",t:"Были вчера, отмечали день рождения. В целом неплохо, менеджеры и официанты отзывчивые. Не понравилось блюдо — его удалили из чека.",s:"2gis"},
+      {n:"Дашуля",t:"Посетили с молодым человеком. Блюда были вкусными, коктейли интересные. Официанту Эльзе спасибо за хорошее обслуживание.",s:"2gis"},
+      {n:"Дарья Кислая",t:"Зашли компанией отдохнуть, не пожалели ни разу! Кальян сделали классно, вкус держался весь вечер. Персонал — внимательные, ненавязчивые. Обязательно вернёмся.",s:"2gis"},
+      {n:"Азалия Медведева",t:"Недавно была в JoJo, остались только приятные впечатления! Бургер «С ума сойти» — это реально нечто. Сочная котлета из мраморной говядины, чеддер, медово-горчичный соус.",s:"2gis"},
+      {n:"Тимур Лопандин",t:"Персонал шикарный, все внимательные и доброжелательные. Спасибо официантке Камиле — очень приятная и милая девушка. Обязательно вернёмся!",s:"2gis"},
+      {n:"Городской житель",t:"Взял орзо с морепродуктами, которых реально много. На десерт авторский наполеон — коржи тонкие, хрустящие, крем в меру сладкий. Возьму ещё раз!",s:"2gis"},
+      {n:"Елена Коняева",t:"Отличная веранда, где можно посидеть и почилить за кальяном. Вкусные коктейли. Есть плюсы и минусы.",s:"2gis"},
+      {n:"Ирина Аюпова",t:"Неплохая кухня, дымный кальян, приветливый персонал. Вернёмся ещё раз.",s:"2gis"},
+      {n:"Екатерина Цветкова",t:"Вайбовое место! Сервис топ! Нам бы в Самару такое заведение.",s:"2gis"},
+      {n:"Джамиля Бегижонова",t:"Любимое заведение на Чистопольской, а их веранда — просто огонь!",s:"2gis"},
+      {n:"ДС",t:"Всё очень вкусно, быстрая подача и еды, и кальяна, и напитков. Официанты своевременно забирали посуду. Придём ещё много раз!",s:"2gis"},
+      {n:"Приятная атмосфера",t:"Очень красиво и спокойно, подобрали красивое место. Очень вкусная еда и вкусный кальян, приятный персонал. Очень понравилось, придём ещё!",s:"2gis"},
+      {n:"Быстрое обслуживание",t:"Огромное внимание чистоте стола, своевременная подача блюд. Приборы чистые, блюда принесены горячими. Всех благ!",s:"2gis"},
+      {n:"Хороший сервис",t:"Мне очень понравилась работа нашего официанта, подсказывал по всем блюдам, предлагал много интересного. Очень хороший сервис, приду ещё!",s:"2gis"},
+      {n:"Артём и Айрат",t:"Приятные молодые люди, очень тактичные, смешные и умеют поддержать беседу. Желаю им любви, удачи, процветания и счастья!",s:"2gis"},
+      {n:"Вкусная кухня",t:"Вкусная кухня и очень милая официантка. Приятная атмосфера, рекомендую!",s:"2gis"},
+      {n:"Класс",t:"Класс! Всё понравилось, обязательно вернёмся!",s:"2gis"},
+      {n:"Все прекрасно",t:"Всё прекрасно. Вкусно, уютно, приятный персонал.",s:"2gis"},
+      {n:"Вежливость",t:"Вежливость, внимательность. Очень приятно провели время!",s:"2gis"},
+      {n:"Приятная беседа",t:"Очень вежливый официант, приятная беседа. Рекомендую!",s:"2gis"},
+      {n:"Рекомендация десерта",t:"Очень приятно и вкусно провели время. Артём, большой респект за рекомендацию вкусного десерта!",s:"2gis"},
+      {n:"Отличный сервис",t:"Очень всё понравилось, отличный сервис. Ставлю лайк, ты крутая!",s:"2gis"},
+      {n:"Милый официант",t:"Всё понравилось, очень милый и улыбчивый официант. Желаем удачи!",s:"2gis"},
+      {n:"Чай с собой",t:"Спасибо за чай с собой! ❤️",s:"2gis"},
+      {n:"Самая внимательная",t:"Самая красивая, самая хорошая и самая внимательная! ❤️",s:"2gis"},
+      {n:"Отличный официант",t:"Артём — отличный официант, респект и уважение ему!",s:"2gis"},
+      {n:"Замечательная девушка",t:"Замечательная девушка! Обязательно вернёмся ещё!",s:"2gis"},
+      {n:"Красотка",t:"Ну вообще красотка!",s:"2gis"},
+      {n:"Плед",t:"Плед мой так и не пришёл, подумал обнимут и согреют, но увы, только алкоголь грел 😄",s:"2gis"},
+      {n:"Классная",t:"Такая классная! 🥰",s:"2gis"},
+      {n:"Вежливый официант",t:"Вежливый официант, вкусная еда, приятный вкус кальяна, хорошая атмосфера летней веранды.",s:"2gis"},
+      {n:"Восхитительна",t:"Внешность девушки — она была восхитительна. Честно, даже я влюбился.",s:"2gis"},
+      {n:"Вежливость и внимательность",t:"Вежливость, внимательность. Рекомендую это заведение!",s:"2gis"},
+    ];
+
+    // 3D Carousel
+    const ring = document.getElementById('carouselRing');
+    const dotsEl = document.getElementById('carouselDots');
+    let current = 0;
+    let interval;
+    const total = reviews.length;
+    const angleStep = 360 / total;
+    const radius = 600;
+
+    function buildCards() {
+      reviews.forEach((r, i) => {
+        const card = document.createElement('div');
+        card.className = 'carousel-card';
+        card.dataset.index = i;
+        const stars = '★'.repeat(5);
+        card.innerHTML = `
+          <p class="review-text">«${r.t}»</p>
+          <div class="review-footer">
+            <div>
+              <div class="review-author">${r.n}</div>
+              <div class="review-source">${r.s === 'yandex' ? 'Яндекс Карты' : '2GIS'}</div>
+            </div>
+            <div class="review-rating">${stars}</div>
+          </div>`;
+        ring.appendChild(card);
+
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Отзыв ${i + 1}`);
+        dot.addEventListener('click', () => { goTo(i); resetInterval(); });
+        dotsEl.appendChild(dot);
+      });
+      layoutCards();
+    }
+
+    function layoutCards() {
+      const cards = ring.querySelectorAll('.carousel-card');
+      cards.forEach((card, i) => {
+        let offset = i - current;
+        // Wrap offset to shortest path
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+
+        const absOffset = Math.abs(offset);
+
+        if (absOffset <= 2) {
+          card.classList.add('active');
+          const angle = offset * 35;
+          const z = -Math.abs(offset) * 180;
+          const x = offset * 220;
+          const scale = 1 - absOffset * 0.15;
+          const opacity = 1 - absOffset * 0.3;
+          card.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${scale})`;
+          card.style.opacity = opacity;
+          card.style.zIndex = 10 - absOffset;
+          card.style.filter = absOffset === 0 ? 'none' : `blur(${absOffset * 0.5}px)`;
+        } else {
+          card.classList.remove('active');
+          card.style.opacity = 0;
+          card.style.zIndex = 0;
+        }
+      });
+
+      // Update dots
+      dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    function goTo(idx) {
+      current = ((idx % total) + total) % total;
+      layoutCards();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    document.getElementById('nextBtn').addEventListener('click', () => { next(); resetInterval(); });
+    document.getElementById('prevBtn').addEventListener('click', () => { prev(); resetInterval(); });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    ring.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    ring.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); resetInterval(); }
+    }, { passive: true });
+
+    function startInterval() { interval = setInterval(next, 3000); }
+    function resetInterval() { clearInterval(interval); startInterval(); }
+
+    buildCards();
+    startInterval();
+
+    // Pause on hover
+    document.querySelector('.carousel-scene').addEventListener('mouseenter', () => clearInterval(interval));
+    document.querySelector('.carousel-scene').addEventListener('mouseleave', startInterval);
+
+    // Reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      clearInterval(interval);
+    }
+  </script>
+</body>
+</html>

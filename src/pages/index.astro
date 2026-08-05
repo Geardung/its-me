@@ -2,11 +2,61 @@
 import About from "../components/About.astro";
 import Contacts from "../components/Contacts.astro";
 import Hero from "../components/Hero.astro";
+import Portfolio from "../components/Portfolio.astro";
 import Projects from "../components/Projects.astro";
 import SkillsMatrix from "../components/SkillsMatrix.astro";
 import Timeline from "../components/Timeline.astro";
 import { profile } from "../data/profile";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const portfolioItems = [
+  {
+    name: "Лампочка — Анти-кафе",
+    description: "Лендинг для анти-кафе в Елабуге с тёмной атмосферной темой, анимированной лампой и интерактивной верёвочкой.",
+    tags: ["html", "css", "js", "landing", "animations"],
+    link: "/portfolio/lampochka",
+    image: "/portfolio/lampochka/preview.png",
+    video: "/portfolio/lampochka/video.mp4",
+  },
+  {
+    name: "Jojo — Кальян-бар",
+    description: "Сайт с нуля за час для кальян-бара в Казани. Современный дизайн с атмосферными фото, меню, каруселью отзывов и картой проезда.",
+    tags: ["html", "css", "js", "landing"],
+    link: "/portfolio/jojo",
+    image: "/portfolio/jojo/preview.png",
+  },
+  {
+    name: "АО «НОЭЗ» — Ребрендинг",
+    description: "Полная переработка корпоративного сайта завода: от таблиц и фиксированной ширины до современного адаптивного дизайна с токен-системой.",
+    tags: ["html", "css", "rebranding", "adaptive"],
+    link: "/portfolio/noez",
+    image: "/portfolio/noez/preview.png",
+  },
+  {
+    name: "Backend API для коммерческого продукта",
+    description: "Проектирование и разработка серверной части на Python: REST API, модели данных, миграции, бизнес-логика. Основной production-проект.",
+    tags: ["python", "fastapi", "postgresql", "sqlalchemy", "alembic"],
+    confidential: true,
+  },
+  {
+    name: "CRM / Административная панель",
+    description: "Внутренний инструмент для управления данными клиентов. Backend-логика + базовая интеграция с фронтендом.",
+    tags: ["python", "fastapi", "vue", "postgresql"],
+    confidential: true,
+  },
+  {
+    name: "Интеграция с внешними API",
+    description: "Наброски интеграции с внешними сервисами: обработка данных, синхронизация, webhook-и и фоновые задачи.",
+    tags: ["python", "fastapi", "celery", "redis"],
+    confidential: true,
+  },
+  {
+    name: "Тестирование и автоматизация",
+    description: "Написание и поддержка автотестов для backend-проектов: unit-тесты, интеграционные сценарии, проверка регрессий.",
+    tags: ["pytest", "postgresql", "autotests", "qa"],
+    confidential: true,
+  },
+];
 ---
 
 <BaseLayout
@@ -21,6 +71,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 >
   <Hero hero={profile.hero} name={profile.name} role={profile.role} />
   <About about={profile.about} />
+  <Portfolio items={portfolioItems} />
   <SkillsMatrix skills={profile.skills} />
   <Timeline entries={profile.timeline} />
   <Projects projects={profile.projects} />

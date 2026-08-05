@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лампочка — Антикафе в Елабуге</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body class="loading">
+
+<!-- ==========================================
+     HERO
+     ========================================== -->
+<section class="hero" id="hero">
+  <canvas id="bulb-canvas"></canvas>
+  <div id="rope-hitarea"></div>
+
+  <div class="hero-inner">
+    <div class="hero-bulb-side"></div>
+
+    <div class="hero-text">
+      <div class="tagline">анти-кафе в Елабуге</div>
+      <h1>Лампочка</h1>
+      <div class="rating">
+        <span class="stars">★★★★★</span>
+        <span>4.8 · 107 оценок</span>
+      </div>
+      <p class="address">просп. Нефтяников, 35 · Елабуга</p>
+      <div class="hero-cta">
+        <a href="#booking" class="btn btn-primary">Забронировать</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="rope-hint">↑ Потяните за верёвочку</div>
+</section>
+
+<!-- ==========================================
+     ABOUT
+     ========================================== -->
+<section class="section reveal" id="about">
+  <div class="section-header">
+    <h2>Добро пожаловать</h2>
+    <p>Место, где хочется провести весь день</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎮</div>
+      <h3>PlayStation 4 и 5</h3>
+      <p>Более 50 игр — от FIFA до хитов вроде The Last of Us и God of War</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎲</div>
+      <h3>Настольные игры</h3>
+      <p>Классика и новинки: от UNO до эзотерических вроде Эпичных Схваток Бойцов</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🍵</div>
+      <h3>Чай и печеньки</h3>
+      <p>Большой выбор чаёв и снеков — уже включены в стоимость посещения</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎵</div>
+      <h3>Винил и атмосфера</h3>
+      <p>Виниловый проигрыватель, уютный интерьер и дружелюбная обстановка</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     BOOKING
+     ========================================== -->
+<section class="section" id="booking">
+  <div class="section-header reveal">
+    <h2>Забронировать зал</h2>
+    <p>Выберите дату, время и зал — мы всё подготовим</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="booking-container reveal">
+    <div class="booking-layout">
+      <div class="booking-panel">
+        <h3>Выберите дату</h3>
+        <div class="calendar-nav">
+          <button id="cal-prev" aria-label="Предыдущий месяц">‹</button>
+          <span class="calendar-month" id="cal-month"></span>
+          <button id="cal-next" aria-label="Следующий месяц">›</button>
+        </div>
+        <div class="calendar-grid" id="cal-grid"></div>
+      </div>
+
+      <div class="booking-panel">
+        <h3>Выберите время</h3>
+        <div class="time-slots-date" id="time-date">Сначала выберите дату</div>
+        <div class="time-grid" id="time-grid"></div>
+
+        <h3>Зал</h3>
+        <div class="room-options">
+          <button class="room-option active" data-room="small" data-price="1500">
+            <span class="room-name">Малый зал</span>
+            <span class="room-price">1 500 ₽/час</span>
+          </button>
+          <button class="room-option" data-room="full" data-price="3000">
+            <span class="room-name">Всё анти-кафе</span>
+            <span class="room-price">3 000 ₽/час</span>
+          </button>
+        </div>
+
+        <div class="booking-summary" id="booking-summary">
+          <div class="summary-row">
+            <span class="summary-label">Зал</span>
+            <span class="summary-value" id="sum-room">Малый зал</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Время</span>
+            <span class="summary-value" id="sum-time">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Длительность</span>
+            <span class="summary-value" id="sum-duration">—</span>
+          </div>
+          <div class="summary-row" id="promo-row" style="display:none">
+            <span class="summary-label">Акция: 3 часа = 4-й в подарок</span>
+            <span class="summary-value promo" id="sum-promo">−1 ч</span>
+          </div>
+          <div class="summary-row total">
+            <span class="summary-label">Итого</span>
+            <span class="summary-value" id="sum-total">—</span>
+          </div>
+        </div>
+
+        <div class="booking-fields">
+          <div class="field-group">
+            <label for="book-name">Ваше имя</label>
+            <input type="text" id="book-name" class="book-input" placeholder="Иван" autocomplete="name">
+          </div>
+          <div class="field-group">
+            <label for="book-phone">Телефон</label>
+            <input type="tel" id="book-phone" class="book-input" placeholder="+7 (999) 123-45-67" autocomplete="tel">
+          </div>
+        </div>
+
+        <button class="btn btn-primary booking-submit" id="book-btn" disabled>Забронировать</button>
+
+        <div class="sms-verify" id="sms-verify" style="display:none">
+          <div class="sms-code-field">
+            <label for="sms-code">Код из SMS</label>
+            <input type="text" id="sms-code" class="book-input" placeholder="0000" maxlength="4" inputmode="numeric">
+          </div>
+          <button class="btn btn-primary booking-submit" id="confirm-btn">Подтвердить</button>
+        </div>
+
+        <div class="sms-hint" id="sms-hint" style="display:none">
+          <div class="sms-mock">
+            <div class="sms-mock-header">SMS от Лампочка</div>
+            <div class="sms-mock-body">Код подтверждения: <strong id="sms-code-display">0000</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================
+     FOOTER
+     ========================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="#about">О нас</a>
+      <a href="#booking">Бронирование</a>
+      <a href="https://yandex.ru/maps/org/lampochka/133130141921" target="_blank" rel="noopener">Яндекс Карты</a>
+      <a href="https://2gis.ru/elabuga/firm/70000001045401819" target="_blank" rel="noopener">2ГИС</a>
+    </div>
+    <div class="footer-contact"><a href="tel:+79869125003">+7 (986) 912-50-03</a></div>
+    <div class="footer-hours">Открыто до 00:00 · просп. Нефтяников, 35, Елабуга</div>
+    <div class="footer-copy">© 2026 Анти-кафе «Лампочка»</div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

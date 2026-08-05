@@ -1,0 +1,616 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="НОЭЗ — Портфолио | Alexander Tedeshi"
+  description="Ребрендинг сайта АО «НОЭЗ» — полная переработка дизайна и верстки"
+  siteName="Alexander Tedeshi"
+  locale="ru_RU"
+  ogImageAlt="НОЭЗ — Ребрендинг корпоративного сайта"
+  brand="Alexander Tedeshi"
+  role="Full-stack Developer"
+  navItems={[]}
+>
+  <div class="portfolio-work">
+    <aside class="portfolio-work__sidebar">
+      <a href="/#portfolio" class="portfolio-work__back">← Назад к портфолио</a>
+
+      <div class="portfolio-work__header">
+        <h1>АО «НОЭЗ» — Ребрендинг</h1>
+        <p>Полная переработка корпоративного сайта завода</p>
+      </div>
+
+      <div class="portfolio-work__meta">
+        <div class="portfolio-work__meta-item">
+          <span class="portfolio-work__label">Тип</span>
+          <span>Корпоративный сайт</span>
+        </div>
+        <div class="portfolio-work__meta-item">
+          <span class="portfolio-work__label">Роль</span>
+          <span>Дизайн + Верстка</span>
+        </div>
+        <div class="portfolio-work__meta-item">
+          <span class="portfolio-work__label">Стек</span>
+          <span>HTML, CSS, Адаптив</span>
+        </div>
+      </div>
+
+      <div class="portfolio-work__description">
+        <p>Полный ребрендинг сайта Новороссийского опытно-экспериментального завода. Старый сайт был сделан на таблицах с фиксированной шириной 994px — новый получился современным, адаптивным и с чистой визуальной системой. Перетаскивай ползунок для сравнения.</p>
+      </div>
+
+      <div class="portfolio-work__annotations-toggle">
+        <button id="toggleAnnotations" class="portfolio-work__btn">
+          <span class="portfolio-work__btn-icon">💬</span>
+          Комментарии автора
+        </button>
+      </div>
+
+      <div class="portfolio-work__annotations" id="annotations">
+        <p class="portfolio-work__annotations-title">Что изменилось</p>
+        <div class="portfolio-work__annotation">
+          <strong>Вёрстка</strong>
+          <span>Таблицы → семантический HTML + CSS Grid. Фиксированная ширина → полностью адаптивный дизайн.</span>
+        </div>
+        <div class="portfolio-work__annotation">
+          <strong>Типографика</strong>
+          <span>Системные шрифты → PT Serif (заголовки) + Source Sans 3 (тело). Выстроена иерархия размеров.</span>
+        </div>
+        <div class="portfolio-work__annotation">
+          <strong>Цветовая палитра</strong>
+          <span>Синий #000066 → тёмно-синий #0A1628 с янтарным акцентом #C07A2E. Выстроена токен-система.</span>
+        </div>
+        <div class="portfolio-work__annotation">
+          <strong>Структура</strong>
+          <span>Единая страница с навигацией вместо разрозненных HTML-файлов. Hero-секция, карточки направлений, каталог продукции.</span>
+        </div>
+        <div class="portfolio-work__annotation">
+          <strong>SEO и доступность</strong>
+          <span>Семантические теги, aria-атрибуты, meta-теги, Open Graph. Старый сайт — windows-1251 без мета-тегов.</span>
+        </div>
+      </div>
+
+      <div class="portfolio-work__links">
+        <a href="/portfolio/noez/site/index.html" class="portfolio-work__link-btn" target="_blank" rel="noopener">
+          Новый сайт →
+        </a>
+        <a href="https://web.archive.org/web/20260209164426/https://noez.pro/index.html" class="portfolio-work__link-btn portfolio-work__link-btn--secondary" target="_blank" rel="noopener">
+          Старый сайт (Wayback) →
+        </a>
+      </div>
+    </aside>
+
+    <main class="portfolio-work__preview">
+      <div class="portfolio-work__browser">
+        <div class="portfolio-work__browser-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="portfolio-work__browser-url">noez.pro — до и после</div>
+      </div>
+
+      <div class="comparison" id="comparison">
+        <div class="comparison__overlay" id="overlay"></div>
+        <div class="comparison__after">
+          <iframe
+            src="/portfolio/noez/site/index.html"
+            title="Новый сайт НОЭЗ"
+            loading="lazy"
+          ></iframe>
+          <div class="comparison__label comparison__label--after">После</div>
+        </div>
+
+        <div class="comparison__before">
+          <iframe
+            src="/portfolio/noez/site/old.html"
+            title="Старый сайт НОЭЗ"
+            loading="lazy"
+          ></iframe>
+          <div class="comparison__label comparison__label--before">До</div>
+        </div>
+
+        <div class="comparison__divider animate animating" id="divider">
+          <div class="comparison__handle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 5l-5 7 5 7"/>
+              <path d="M16 5l5 7-5 7"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  :global(.page-content) {
+    padding: 0 !important;
+    gap: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  :global(.topbar) {
+    display: none !important;
+  }
+
+  :global(.footer) {
+    display: none !important;
+  }
+
+  .portfolio-work {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .portfolio-work__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.2rem;
+    border-right: 1px solid var(--color-border);
+    background: var(--color-panel);
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  .portfolio-work__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .portfolio-work__back:hover {
+    opacity: 0.7;
+  }
+
+  .portfolio-work__header h1 {
+    margin: 0 0 0.3rem;
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  .portfolio-work__header p {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .portfolio-work__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    background: var(--color-panel-soft);
+  }
+
+  .portfolio-work__meta-item {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .portfolio-work__label {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-work__description p {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .portfolio-work__annotations-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .portfolio-work__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--color-accent);
+    border-radius: 0.5rem;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .portfolio-work__btn:hover {
+    opacity: 0.85;
+  }
+
+  .portfolio-work__btn--secondary {
+    background: transparent;
+    color: var(--color-accent);
+  }
+
+  .portfolio-work__btn-icon {
+    font-size: 1rem;
+  }
+
+  .portfolio-work__annotations {
+    display: none;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .portfolio-work__annotations.visible {
+    display: flex;
+  }
+
+  .portfolio-work__annotations-title {
+    margin: 0;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .portfolio-work__annotation {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.6rem;
+    background: var(--color-panel-soft);
+    transition: border-color 0.2s;
+  }
+
+  .portfolio-work__annotation:hover {
+    border-color: var(--color-accent);
+  }
+
+  .portfolio-work__annotation strong {
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  .portfolio-work__annotation span {
+    margin: 0;
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .portfolio-work__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .portfolio-work__link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--color-accent);
+    border-radius: 0.5rem;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .portfolio-work__link-btn:hover {
+    opacity: 0.85;
+  }
+
+  .portfolio-work__link-btn--secondary {
+    background: transparent;
+    color: var(--color-accent);
+  }
+
+  /* ===== COMPARISON SLIDER ===== */
+  .portfolio-work__preview {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #1a1a2e;
+  }
+
+  .portfolio-work__browser {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+  }
+
+  .portfolio-work__browser-dots {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .portfolio-work__browser-dots span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .portfolio-work__browser-url {
+    flex: 1;
+    padding: 0.35rem 0.7rem;
+    border-radius: 0.35rem;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .comparison {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    cursor: ew-resize;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .comparison__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 25;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .comparison__overlay.hidden {
+    opacity: 0;
+  }
+
+  .comparison__before,
+  .comparison__after {
+    position: absolute;
+    inset: 0;
+  }
+
+  .comparison__before iframe,
+  .comparison__after iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .comparison__after {
+    z-index: 1;
+  }
+
+  .comparison__before {
+    z-index: 2;
+    clip-path: inset(0 50% 0 0);
+  }
+
+  .comparison__label {
+    position: absolute;
+    top: 1rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 30;
+  }
+
+  .comparison__label--before {
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ff6b6b;
+  }
+
+  .comparison__label--after {
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: #51cf66;
+  }
+
+  .comparison__divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: #fff;
+    transform: translateX(-50%);
+    z-index: 30;
+    cursor: ew-resize;
+  }
+
+  .comparison__handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a2e;
+    transition: transform 0.15s ease;
+  }
+
+  .comparison__handle:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .comparison__handle svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .comparison__handle.pulsing {
+    animation: handle-pulse 0.5s ease-in-out 2;
+  }
+
+  @keyframes handle-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+    50% { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 2px 20px rgba(255, 255, 255, 0.4); }
+  }
+
+  @media (max-width: 900px) {
+    .portfolio-work {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      height: auto;
+      min-height: 100dvh;
+    }
+
+    .portfolio-work__sidebar {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+      max-height: none;
+      overflow-y: visible;
+    }
+
+    .portfolio-work__preview {
+      height: 70vh;
+      min-height: 400px;
+    }
+  }
+</style>
+
+<script>
+  const comparison = document.getElementById("comparison") as HTMLElement;
+  const before = comparison.querySelector(".comparison__before") as HTMLElement;
+  const divider = document.getElementById("divider") as HTMLElement;
+  const handle = divider.querySelector(".comparison__handle") as HTMLElement;
+  const overlay = document.getElementById("overlay") as HTMLElement;
+
+  let interacted = false;
+  let animationId: number | null = null;
+
+  function clearEffects() {
+    if (interacted) return;
+    interacted = true;
+    overlay.classList.add("hidden");
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+    divider.style.left = "50%";
+    before.style.clipPath = "inset(0 50% 0 0)";
+  }
+
+  function setPosition(clientX: number) {
+    const rect = comparison.getBoundingClientRect();
+    let pct = ((clientX - rect.left) / rect.width) * 100;
+    pct = Math.max(2, Math.min(98, pct));
+    before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    divider.style.left = `${pct}%`;
+  }
+
+  // Handle pulse animation
+  handle.classList.add("pulsing");
+  handle.addEventListener("animationend", () => {
+    handle.classList.remove("pulsing");
+  });
+
+  // Divider wiggle with clip-path update
+  let wiggleStart = performance.now();
+  const wiggleDuration = 500;
+  const wiggleRange = 2;
+
+  function wiggle(now: number) {
+    if (interacted) return;
+    const elapsed = now - wiggleStart;
+    if (elapsed > wiggleDuration * 2) {
+      wiggleStart = now;
+    }
+    const t = (elapsed % wiggleDuration) / wiggleDuration;
+    const ease = Math.sin(t * Math.PI);
+    const offset = ease * wiggleRange;
+    const pct = 50 + offset;
+    divider.style.left = `${pct}%`;
+    before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    animationId = requestAnimationFrame(wiggle);
+  }
+
+  animationId = requestAnimationFrame(wiggle);
+
+  // Pointer events — reliable drag on fast mouse movement
+  let pointerId: number | null = null;
+
+  comparison.addEventListener("pointerdown", (e) => {
+    clearEffects();
+    pointerId = e.pointerId;
+    comparison.setPointerCapture(pointerId);
+    setPosition(e.clientX);
+  });
+
+  comparison.addEventListener("pointermove", (e) => {
+    if (pointerId === null) return;
+    if (e.pointerId !== pointerId) return;
+    e.preventDefault();
+    setPosition(e.clientX);
+  });
+
+  comparison.addEventListener("pointerup", (e) => {
+    if (e.pointerId === pointerId) {
+      pointerId = null;
+    }
+  });
+
+  comparison.addEventListener("pointercancel", (e) => {
+    if (e.pointerId === pointerId) {
+      pointerId = null;
+    }
+  });
+
+  comparison.addEventListener("lostpointercapture", () => {
+    pointerId = null;
+  });
+
+  // Annotations toggle
+  const toggleBtn = document.getElementById("toggleAnnotations");
+  const annotationsPanel = document.getElementById("annotations");
+  let annotationsVisible = false;
+
+  toggleBtn?.addEventListener("click", () => {
+    annotationsVisible = !annotationsVisible;
+    annotationsPanel?.classList.toggle("visible", annotationsVisible);
+    toggleBtn.textContent = annotationsVisible ? "Скрыть комментарии" : "Комментарии автора";
+  });
+</script>
