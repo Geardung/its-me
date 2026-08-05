@@ -1,7 +1,6 @@
 ---
 import type { ContactLink } from "../data/profile";
 import SectionHeading from "./SectionHeading.astro";
-import Telemoji from "./Telemoji.astro";
 
 interface Props {
   contacts: ContactLink[];
@@ -15,7 +14,7 @@ const { contacts } = Astro.props;
     eyebrow="connect://open"
     title="Контакты"
     description="Если вам близок такой рабочий подход, написать мне можно напрямую в Telegram, на почту или через GitHub."
-    emoji={contacts[0].emoji}
+    id="contacts"
   />
 
   <div class="contacts-grid">
@@ -34,7 +33,6 @@ const { contacts } = Astro.props;
               }
             </div>
 
-            <Telemoji asset={contact.emoji} size={48} />
           </div>
 
           <span>{contact.note}</span>

@@ -1,6 +1,5 @@
 ---
 import type { HeroData, ProfileData } from "../data/profile";
-import Telemoji from "./Telemoji.astro";
 
 interface Props {
   hero: HeroData;
@@ -19,7 +18,6 @@ const { hero, name, role } = Astro.props;
     </div>
 
     <div class="hero__title-wrap">
-      <Telemoji asset={hero.emoji} size={80} className="hero__emoji" />
       <p class="hero__identity">{name}</p>
       <h1>{hero.title}</h1>
       <p class="hero__role">{role}</p>
@@ -41,7 +39,6 @@ const { hero, name, role } = Astro.props;
       {
         hero.focus.map((item) => (
           <li>
-            <Telemoji asset={item.emoji} size={28} />
             <span>{item.label}</span>
           </li>
         ))
@@ -56,7 +53,6 @@ const { hero, name, role } = Astro.props;
           <article class="hero__card">
             <div class="hero__card-head">
               <span>{card.label}</span>
-              <Telemoji asset={card.emoji} size={26} />
             </div>
             <strong>{card.value}</strong>
           </article>
@@ -76,9 +72,7 @@ const { hero, name, role } = Astro.props;
         <span>mode: portfolio</span>
       </div>
 
-      <pre>
-        <code>{hero.terminalLines.join("\n")}</code>
-      </pre>
+<pre><code>{hero.terminalLines.join("\n")}</code></pre>
     </div>
   </div>
 </section>
@@ -118,14 +112,6 @@ const { hero, name, role } = Astro.props;
     position: relative;
     display: grid;
     gap: 0.5rem;
-  }
-
-  .hero__emoji {
-    position: absolute;
-    right: clamp(0rem, 4vw, 2rem);
-    top: -0.5rem;
-    filter: drop-shadow(0 14px 30px rgba(94, 57, 17, 0.25));
-    animation: drift 7s ease-in-out infinite;
   }
 
   .hero__identity,
@@ -298,10 +284,6 @@ const { hero, name, role } = Astro.props;
       font-size: clamp(2.7rem, 8vw, 4.2rem);
     }
 
-    .hero__emoji {
-      right: 0;
-      top: -1.5rem;
-    }
   }
 
   @media (max-width: 760px) {
@@ -312,13 +294,6 @@ const { hero, name, role } = Astro.props;
 
     .hero__title-wrap {
       gap: 0.45rem;
-    }
-
-    .hero__emoji {
-      right: 0;
-      top: -2.2rem;
-      width: 64px;
-      height: 64px;
     }
 
     .hero__summary,

@@ -1,7 +1,6 @@
 ---
 import type { ProjectCard } from "../data/profile";
 import SectionHeading from "./SectionHeading.astro";
-import Telemoji from "./Telemoji.astro";
 
 interface Props {
   projects: ProjectCard[];
@@ -15,7 +14,7 @@ const { projects } = Astro.props;
     eyebrow="cases://selected"
     title="Кейсы и инженерные паттерны"
     description="Пока без привязки к конфиденциальным коммерческим данным: здесь собраны паттерны решений и подходы, которые лучше всего отражают мой стиль работы."
-    emoji={projects[0].emoji}
+    id="projects"
   />
 
   <div class="projects-grid">
@@ -27,8 +26,6 @@ const { projects } = Astro.props;
               <p class="project-card__role">{project.role}</p>
               <h3>{project.name}</h3>
             </div>
-
-            <Telemoji asset={project.emoji} size={56} />
           </div>
 
           <p class="project-card__summary">{project.summary}</p>

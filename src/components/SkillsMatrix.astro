@@ -1,7 +1,6 @@
 ---
 import type { SkillGroup } from "../data/profile";
 import SectionHeading from "./SectionHeading.astro";
-import Telemoji from "./Telemoji.astro";
 
 interface Props {
   skills: SkillGroup[];
@@ -15,7 +14,7 @@ const { skills } = Astro.props;
     eyebrow="matrix://skills"
     title="Матрица навыков"
     description="Основные инженерные направления, в которых я работаю: от схем данных и API до UI, качества релиза и архитектурных компромиссов."
-    emoji={skills[0].emoji}
+    id="skills"
   />
 
   <div class="skills-grid">
@@ -27,8 +26,6 @@ const { skills } = Astro.props;
               <p class="skill-card__label">domain</p>
               <h3>{group.title}</h3>
             </div>
-
-            <Telemoji asset={group.emoji} size={52} />
           </div>
 
           <p class="skill-card__summary">{group.summary}</p>
@@ -39,7 +36,6 @@ const { skills } = Astro.props;
                 <li>
                   <div class="skill-card__row">
                     <div class="skill-card__name">
-                      <Telemoji asset={item.emoji} size={24} />
                       <strong>{item.name}</strong>
                     </div>
                     <span>{item.level}</span>

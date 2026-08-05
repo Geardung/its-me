@@ -1,24 +1,25 @@
 ---
-import Telemoji from "./Telemoji.astro";
-import type { TelemojiAsset } from "../data/profile";
-
 interface Props {
   eyebrow: string;
   title: string;
   description: string;
-  emoji: TelemojiAsset;
+  id?: string;
 }
 
-const { eyebrow, title, description, emoji } = Astro.props;
+const { eyebrow, title, description, id } = Astro.props;
 ---
 
 <div class="section-heading">
   <div class="section-heading__eyebrow">
-    <Telemoji asset={emoji} size={28} />
     <span>{eyebrow}</span>
   </div>
 
-  <h2>{title}</h2>
+  <h2 class="section-heading__title">
+    {id && (
+      <a href={`#${id}`} class="section-heading__anchor" aria-label={`Ссылка на раздел: ${title}`}>#</a>
+    )}
+    {title}
+  </h2>
   <p>{description}</p>
 </div>
 
@@ -40,10 +41,30 @@ const { eyebrow, title, description, emoji } = Astro.props;
     text-transform: uppercase;
   }
 
-  h2 {
+  h2,
+  .section-heading__title {
+    position: relative;
     margin: 0;
     font-size: clamp(2rem, 4vw, 3rem);
     line-height: 1.05;
+  }
+
+  .section-heading__anchor {
+    position: absolute;
+    right: 100%;
+    margin-right: 0.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.5em;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    line-height: 1;
+  }
+
+  .section-heading__title:hover .section-heading__anchor,
+  .section-heading__anchor:hover {
+    opacity: 1;
   }
 
   p {
@@ -61,6 +82,10 @@ const { eyebrow, title, description, emoji } = Astro.props;
     .section-heading__eyebrow {
       font-size: 0.78rem;
       letter-spacing: 0.1em;
+    }
+
+    .section-heading__anchor {
+      display: none;
     }
 
     p {

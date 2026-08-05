@@ -1,7 +1,6 @@
 ---
 import type { TimelineEntry } from "../data/profile";
 import SectionHeading from "./SectionHeading.astro";
-import Telemoji from "./Telemoji.astro";
 
 interface Props {
   entries: TimelineEntry[];
@@ -15,7 +14,7 @@ const { entries } = Astro.props;
     eyebrow="history://engineering"
     title="Таймлайн развития"
     description="Не календарь должностей, а карта того, как формировалось инженерное мышление: от отдельных задач к системному взгляду."
-    emoji={entries[0].emoji}
+    id="timeline"
   />
 
   <div class="timeline">
@@ -30,8 +29,6 @@ const { entries } = Astro.props;
                 <h3>{entry.title}</h3>
                 <p>{entry.description}</p>
               </div>
-
-              <Telemoji asset={entry.emoji} size={54} />
             </div>
 
             <ul>
