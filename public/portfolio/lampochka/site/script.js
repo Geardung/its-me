@@ -1,3 +1,9 @@
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
 // roundRect polyfill
 if (!CanvasRenderingContext2D.prototype.roundRect) {
   CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
@@ -841,12 +847,12 @@ function toggleTheme() {
       '<div class="result-icon"><svg class="bulb-svg" viewBox="0 0 64 64" width="64" height="64"><path class="bulb-glass" d="M32 4c-11 0-20 8-20 19 0 7 3 13 8 17v10h24V40c5-4 8-10 8-17 0-11-9-19-20-19z" fill="none" stroke="currentColor" stroke-width="2"/><path class="bulb-filament" d="M26 28c0-4 2-8 6-10 4 2 6 6 6 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect class="bulb-base" x="24" y="43" width="16" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><line class="bulb-thread" x1="26" y1="47" x2="38" y2="47" stroke="currentColor" stroke-width="1.5"/><line class="bulb-thread" x1="26" y1="50" x2="38" y2="50" stroke="currentColor" stroke-width="1.5"/><circle class="bulb-glow" cx="32" cy="24" r="22" fill="none" stroke="none"/></svg></div>' +
       '<h3>Бронирование подтверждено</h3>' +
       '<div class="result-details">' +
-        '<div class="result-row"><span class="result-label">Имя</span><span class="result-value">' + nameInput.value + '</span></div>' +
-        '<div class="result-row"><span class="result-label">Телефон</span><span class="result-value">' + phoneInput.value + '</span></div>' +
-        '<div class="result-row"><span class="result-label">Дата</span><span class="result-value">' + dateStr + '</span></div>' +
-        '<div class="result-row"><span class="result-label">Время</span><span class="result-value">' + timeStr + '</span></div>' +
-        '<div class="result-row"><span class="result-label">Зал</span><span class="result-value">' + roomName + '</span></div>' +
-        '<div class="result-row result-total"><span class="result-label">Итого</span><span class="result-value">' + total + '</span></div>' +
+        '<div class="result-row"><span class="result-label">Имя</span><span class="result-value">' + escapeHtml(nameInput.value) + '</span></div>' +
+        '<div class="result-row"><span class="result-label">Телефон</span><span class="result-value">' + escapeHtml(phoneInput.value) + '</span></div>' +
+        '<div class="result-row"><span class="result-label">Дата</span><span class="result-value">' + escapeHtml(dateStr) + '</span></div>' +
+        '<div class="result-row"><span class="result-label">Время</span><span class="result-value">' + escapeHtml(timeStr) + '</span></div>' +
+        '<div class="result-row"><span class="result-label">Зал</span><span class="result-value">' + escapeHtml(roomName) + '</span></div>' +
+        '<div class="result-row result-total"><span class="result-label">Итого</span><span class="result-value">' + escapeHtml(total) + '</span></div>' +
       '</div>' +
       '<div class="result-qr"><div id="qr-container"></div><p>Покажите QR-код на стойке</p></div>' +
     '</div>';
